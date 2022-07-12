@@ -12,4 +12,5 @@ public interface OrdersService {
     Orders insertOrder(Long userId, Orders order);
     Orders nextStatus(Long orderId);
     Orders setDeliveredStatus(Long orderId);
+    Orders setRejectedStatus(Long orderId);
 }

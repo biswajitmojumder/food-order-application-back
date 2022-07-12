@@ -54,6 +54,11 @@ public class OrdersServiceImpl implements OrdersService {
     @Override
     public Orders nextStatus(Long orderId) {
         Orders order = ordersRepository.findById(orderId).get();
+        String orderStatusVal = order.getOrderStatus().name();
+
+        if(orderStatusVal.equals("REJECTED") || orderStatusVal.equals("DELIVERED")) {
+            throw new RuntimeException("This order cannot be updated anymore!");
+        }
 
         if(order.getOrderStatus().ordinal() < OrderStatus.values().length-2) {
             OrderStatus orderStatus = OrderStatus.values()[order.getOrderStatus().ordinal() + 1];
@@ -66,10 +71,18 @@ public class OrdersServiceImpl implements OrdersService {
     @Override
     public Orders setDeliveredStatus(Long orderId) {
         Orders order = ordersRepository.findById(orderId).get();
-        String finalStatus = OrderStatus.values()[OrderStatus.values().length-1].name();
-        OrderStatus orderStatus = OrderStatus.valueOf(finalStatus);
-        order.setOrderStatus(orderStatus);
+        order.setOrderStatus(OrderStatus.DELIVERED);
 
         return order;
     }
+
+    @Override
+    public Orders setRejectedStatus(Long orderId) {
+        Orders order = ordersRepository.findById(orderId).get();
+        order.setOrderStatus(OrderStatus.REJECTED);
+
+        return order;
+    }
+
+
 }
