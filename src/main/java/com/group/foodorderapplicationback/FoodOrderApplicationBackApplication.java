@@ -35,6 +35,7 @@ public class FoodOrderApplicationBackApplication {
 			accountService.saveRole(new Role(null, "ROLE_DELIVERY_USER", null));
 			accountService.saveRole(new Role(null, "ROLE_ADMIN", null));
 			accountService.saveRole(new Role(null, "ROLE_MANAGER", null));
+			accountService.saveRole(new Role(null, "ROLE_STAFF", null));
 
 			accountService.saveAccount(new Account(null, "Admin", "User", "admin@email.com", "admin", "password", null));
 			accountService.addRoleToAccount("admin", "ROLE_ADMIN");

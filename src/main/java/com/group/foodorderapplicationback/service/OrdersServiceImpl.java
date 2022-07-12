@@ -50,4 +50,26 @@ public class OrdersServiceImpl implements OrdersService {
             throw new RuntimeException("User id not found!");
         }
     }
+
+    @Override
+    public Orders nextStatus(Long orderId) {
+        Orders order = ordersRepository.findById(orderId).get();
+
+        if(order.getOrderStatus().ordinal() < OrderStatus.values().length-2) {
+            OrderStatus orderStatus = OrderStatus.values()[order.getOrderStatus().ordinal() + 1];
+            order.setOrderStatus(orderStatus);
+        }
+
+        return order;
+    }
+
+    @Override
+    public Orders setDeliveredStatus(Long orderId) {
+        Orders order = ordersRepository.findById(orderId).get();
+        String finalStatus = OrderStatus.values()[OrderStatus.values().length-1].name();
+        OrderStatus orderStatus = OrderStatus.valueOf(finalStatus);
+        order.setOrderStatus(orderStatus);
+
+        return order;
+    }
 }

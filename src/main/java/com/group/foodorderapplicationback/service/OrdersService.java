@@ -10,5 +10,6 @@ public interface OrdersService {
     List<Orders> findAll();
     List<Orders> findByOrderStatus(OrderStatus orderStatus);
     Orders insertOrder(Long userId, Orders order);
-
+    Orders nextStatus(Long orderId);
+    Orders setDeliveredStatus(Long orderId);
 }

@@ -28,4 +28,14 @@ public class OrdersController {
     public ResponseEntity<List<Orders>> getAllOrdersByOrderStatus(@RequestParam OrderStatus status) {
         return ResponseEntity.ok().body(ordersService.findByOrderStatus(status));
     }
+
+    @PostMapping(value = "/orders/next-status", params = "id")
+    public ResponseEntity<Orders> nextStatus(@RequestParam Long id) {
+        return ResponseEntity.ok().body(ordersService.nextStatus(id));
+    }
+
+    @PostMapping(value = "/orders/set-delivered-status", params = "id")
+    public ResponseEntity<Orders> setDeliveredStatus(@RequestParam Long id) {
+        return ResponseEntity.ok().body(ordersService.setDeliveredStatus(id));
+    }
 }
