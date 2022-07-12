@@ -64,7 +64,7 @@ public class AccountServiceImpl implements AccountService, UserDetailsService {
             throw new UsernameNotFoundException("Username not found!");
         }
 
-        log.info("User {" + username + "} found!");
+        log.info("Account with username {" + username + "} found!");
 
         UserPrincipal userPrincipal = new UserPrincipal(account);
         return userPrincipal;
