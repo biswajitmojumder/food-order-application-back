@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -18,13 +19,20 @@ public class Orders {
     private User user;
 
     @OneToOne
-    private DeliveryUser activeDeliveryUser;
+    private DeliveryUser deliveryUser;
 
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @ManyToMany(mappedBy = "orderHistory", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    private List<DeliveryUser> deliveryUserHistory;
+    @ManyToMany
+    @JoinTable(name = "orders_food",
+        joinColumns =@JoinColumn(name="order_id",referencedColumnName = "id"),
+        inverseJoinColumns =@JoinColumn(name="food_id",referencedColumnName="id"))
+    private List<Food> foodList;
 
-    @OneToOne
+    private LocalDateTime orderDateTime;
+
+    @Enumerated(EnumType.STRING)
+    private OrderStatus orderStatus;
+
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     private Address address;
 
 }

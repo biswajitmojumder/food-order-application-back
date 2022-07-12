@@ -15,10 +15,10 @@ public class Address {
     private String street;
     private String number;
 
-    @OneToOne(mappedBy = "address", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(mappedBy = "address")
     private Restaurant restaurant;
 
-    @OneToOne(mappedBy = "address", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(mappedBy = "address")
     private Orders order;
 
 }

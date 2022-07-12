@@ -28,4 +28,10 @@ public class Food {
     @OneToMany(mappedBy = "food", cascade = CascadeType.ALL)
     private List<Review> foodReview;
 
+    @ManyToMany(mappedBy = "foodList")
+    private List<Restaurant> restaurantList;
+
+    @ManyToMany(mappedBy = "foodList")
+    private List<Orders> ordersList;
+
 }

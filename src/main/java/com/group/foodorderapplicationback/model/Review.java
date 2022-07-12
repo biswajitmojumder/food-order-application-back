@@ -18,4 +18,10 @@ public class Review {
     @ManyToOne
     private Food food;
 
+    @ManyToOne
+    private User user;
+
+    @ManyToOne
+    private Restaurant restaurant;
+
 }

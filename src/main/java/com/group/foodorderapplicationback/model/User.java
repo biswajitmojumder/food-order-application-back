@@ -22,4 +22,7 @@ public class User extends Account {
             inverseJoinColumns =@JoinColumn(name="food_id",referencedColumnName="id"))
     private List<Food> favouriteFood;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Review> reviews;
+
 }
