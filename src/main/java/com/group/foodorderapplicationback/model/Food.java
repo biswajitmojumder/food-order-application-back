@@ -1,13 +1,17 @@
 package com.group.foodorderapplicationback.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Data
+@AllArgsConstructor
+@RequiredArgsConstructor
 public class Food {
 
     @Id
