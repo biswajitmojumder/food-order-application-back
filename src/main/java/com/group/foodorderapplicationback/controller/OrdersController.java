@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.servlet.http.HttpServletRequest;
 import java.net.URI;
 import java.util.List;
 
@@ -30,6 +31,12 @@ public class OrdersController {
     public ResponseEntity<Orders> newOrder(@RequestParam Long userId, @RequestBody Orders order) {
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/orders/new").toUriString());    //Status 201 - created
         return ResponseEntity.created(uri).body(ordersService.insertOrder(userId, order));
+    }
+
+    @PostMapping(value = "/orders/new-authenticated")
+    public ResponseEntity<Orders> newOrder(HttpServletRequest request, @RequestBody Orders order) {
+        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/orders/new-authenticated").toUriString());    //Status 201 - created
+        return ResponseEntity.created(uri).body(ordersService.insertOrderForAuthenticatedUser(request, order));
     }
 
     @PutMapping(value = "/orders/next-status", params = "id")

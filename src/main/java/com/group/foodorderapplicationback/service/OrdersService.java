@@ -3,6 +3,7 @@ package com.group.foodorderapplicationback.service;
 import com.group.foodorderapplicationback.model.OrderStatus;
 import com.group.foodorderapplicationback.model.Orders;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public interface OrdersService {
@@ -10,6 +11,7 @@ public interface OrdersService {
     List<Orders> findAll();
     List<Orders> findByOrderStatus(OrderStatus orderStatus);
     Orders insertOrder(Long userId, Orders order);
+    Orders insertOrderForAuthenticatedUser(HttpServletRequest request, Orders order);
     Orders nextStatus(Long orderId);
     Orders setDeliveredStatus(Long orderId);
     Orders setRejectedStatus(Long orderId);
