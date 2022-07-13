@@ -5,9 +5,11 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.group.foodorderapplicationback.model.Food;
+import com.group.foodorderapplicationback.model.Orders;
 import com.group.foodorderapplicationback.model.Role;
 import com.group.foodorderapplicationback.model.User;
 import com.group.foodorderapplicationback.repository.FoodRepository;
+import com.group.foodorderapplicationback.repository.OrdersRepository;
 import com.group.foodorderapplicationback.repository.RoleRepository;
 import com.group.foodorderapplicationback.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -73,5 +75,31 @@ public class UserServiceImpl implements UserService {
         userRepository.findByUsername(decodedJWT.getSubject()).getFavouriteFood().add(food);
 
         return food;
+    }
+
+    @Override
+    public List<Food> findFavouriteFoodForUser(HttpServletRequest request) {
+        String authorizationHeader = request.getHeader(AUTHORIZATION);
+        String token = authorizationHeader.substring("Bearer ".length());
+        Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());   //debug secret - same as authentication
+        JWTVerifier jwtVerifier = JWT.require(algorithm).build();
+        DecodedJWT decodedJWT = jwtVerifier.verify(token);
+
+        log.info("Getting favourite food list for authorized user: {" + decodedJWT.getSubject() + "}");
+
+        return userRepository.findByUsername(decodedJWT.getSubject()).getFavouriteFood();
+    }
+
+    @Override
+    public List<Orders> findAllOrdersForUser(HttpServletRequest request) {
+        String authorizationHeader = request.getHeader(AUTHORIZATION);
+        String token = authorizationHeader.substring("Bearer ".length());
+        Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());   //debug secret - same as authentication
+        JWTVerifier jwtVerifier = JWT.require(algorithm).build();
+        DecodedJWT decodedJWT = jwtVerifier.verify(token);
+
+        log.info("Getting order history for authorized user: {" + decodedJWT.getSubject() + "}");
+
+        return userRepository.findByUsername(decodedJWT.getSubject()).getOrders();
     }
 }

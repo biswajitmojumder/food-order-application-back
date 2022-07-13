@@ -1,6 +1,7 @@
 package com.group.foodorderapplicationback.service;
 
 import com.group.foodorderapplicationback.model.Food;
+import com.group.foodorderapplicationback.model.Orders;
 import com.group.foodorderapplicationback.model.User;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,4 +18,6 @@ public interface UserService {
     User getUser(String username);
     void deleteById(Long id);
     Food addFoodToFavorites(Long foodId, HttpServletRequest request);
+    List<Food> findFavouriteFoodForUser(HttpServletRequest request);
+    List<Orders> findAllOrdersForUser(HttpServletRequest request);
 }

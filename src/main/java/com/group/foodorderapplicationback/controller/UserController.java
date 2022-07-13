@@ -1,6 +1,7 @@
 package com.group.foodorderapplicationback.controller;
 
 import com.group.foodorderapplicationback.model.Food;
+import com.group.foodorderapplicationback.model.Orders;
 import com.group.foodorderapplicationback.model.User;
 import com.group.foodorderapplicationback.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,16 @@ public class UserController {
     @GetMapping("/user/get-all")
     public ResponseEntity<List<User>> getAllUsers() {
         return ResponseEntity.ok().body(userService.findAll());
+    }
+
+    @GetMapping("/user/get-favorite-food")
+    public ResponseEntity<List<Food>> getFavoriteFood(HttpServletRequest request) {
+        return ResponseEntity.ok().body(userService.findFavouriteFoodForUser(request));
+    }
+
+    @GetMapping("/user/get-order-history")
+    public ResponseEntity<List<Orders>> getUserOrders(HttpServletRequest request) {
+        return ResponseEntity.ok().body(userService.findAllOrdersForUser(request));
     }
 
     @PostMapping("/user/new")
