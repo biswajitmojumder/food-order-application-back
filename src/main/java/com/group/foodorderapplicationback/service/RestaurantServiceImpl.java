@@ -32,4 +32,9 @@ public class RestaurantServiceImpl implements RestaurantService {
     public Restaurant save(Restaurant restaurant) {
         return restaurantRepository.save(restaurant);
     }
+
+    @Override
+    public void deleteById(Long id) {
+        restaurantRepository.deleteById(id);
+    }
 }

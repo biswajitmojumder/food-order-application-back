@@ -1,8 +1,8 @@
 package com.group.foodorderapplicationback.service;
 
-import com.group.foodorderapplicationback.model.Account;
+import com.group.foodorderapplicationback.model.Manager;
 import com.group.foodorderapplicationback.model.Role;
-import com.group.foodorderapplicationback.repository.AccountRepository;
+import com.group.foodorderapplicationback.repository.ManagerRepository;
 import com.group.foodorderapplicationback.repository.RoleRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,23 +17,28 @@ import javax.transaction.Transactional;
 @Slf4j
 public class ManagerServiceImpl implements ManagerService {
 
-    private final AccountRepository accountRepository;
+    private final ManagerRepository managerRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public Account saveManager(Account account) {
-        account.setPassword(passwordEncoder.encode(account.getPassword()));
+    public Manager save(Manager manager) {
+        manager.setPassword(passwordEncoder.encode(manager.getPassword()));
 
         Role role = roleRepository.findByName("ROLE_MANAGER");
 
-        account.getRoleList().add(role);
+        manager.getRoleList().add(role);
 
-        return accountRepository.save(account);
+        return managerRepository.save(manager);
     }
 
     @Override
-    public Account getManager(String username) {
-        return null;
+    public Manager getManager(String username) {
+        return managerRepository.findByUsername(username);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        managerRepository.deleteById(id);
     }
 }

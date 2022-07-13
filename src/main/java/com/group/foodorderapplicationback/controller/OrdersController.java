@@ -32,17 +32,17 @@ public class OrdersController {
         return ResponseEntity.created(uri).body(ordersService.insertOrder(userId, order));
     }
 
-    @PostMapping(value = "/orders/next-status", params = "id")
+    @PutMapping(value = "/orders/next-status", params = "id")
     public ResponseEntity<Orders> nextStatus(@RequestParam Long id) {
         return ResponseEntity.ok().body(ordersService.nextStatus(id));
     }
 
-    @PostMapping(value = "/orders/set-delivered-status", params = "id")
+    @PutMapping(value = "/orders/set-delivered-status", params = "id")
     public ResponseEntity<Orders> setDeliveredStatus(@RequestParam Long id) {
         return ResponseEntity.ok().body(ordersService.setDeliveredStatus(id));
     }
 
-    @PostMapping(value = "/orders/set-rejected-status", params = "id")
+    @PutMapping(value = "/orders/set-rejected-status", params = "id")
     public ResponseEntity<Orders> setRejectedStatus(@RequestParam Long id) {
         return ResponseEntity.ok().body(ordersService.setRejectedStatus(id));
     }

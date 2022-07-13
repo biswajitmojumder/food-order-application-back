@@ -1,7 +1,9 @@
 package com.group.foodorderapplicationback.service;
 
-import com.group.foodorderapplicationback.model.Account;
+import com.group.foodorderapplicationback.model.Staff;
 
 public interface StaffService {
-    Account saveStaff(Account account);
+    Staff save(Staff account);
+    Staff getStaff(String username);
+    void deleteById(Long id);
 }

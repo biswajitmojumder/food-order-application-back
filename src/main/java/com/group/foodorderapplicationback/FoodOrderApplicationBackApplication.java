@@ -1,10 +1,7 @@
 package com.group.foodorderapplicationback;
 
 import com.group.foodorderapplicationback.model.*;
-import com.group.foodorderapplicationback.service.AccountService;
-import com.group.foodorderapplicationback.service.FoodService;
-import com.group.foodorderapplicationback.service.RestaurantService;
-import com.group.foodorderapplicationback.service.UserService;
+import com.group.foodorderapplicationback.service.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -26,6 +23,7 @@ public class FoodOrderApplicationBackApplication {
 
 	@Bean
 	CommandLineRunner run(AccountService accountService,
+						  AdminService adminService,
 						  UserService userService,
 						  FoodService foodService,
 						  RestaurantService restaurantService) {
@@ -37,8 +35,13 @@ public class FoodOrderApplicationBackApplication {
 			accountService.saveRole(new Role(null, "ROLE_MANAGER", null));
 			accountService.saveRole(new Role(null, "ROLE_STAFF", null));
 
-			accountService.saveAccount(new Account(null, "Admin", "User", "admin@email.com", "admin", "password", null));
-			accountService.addRoleToAccount("admin", "ROLE_ADMIN");
+			Admin admin = new Admin();
+			admin.setUsername("admin");
+			admin.setPassword("password");
+			admin.setEmail("admin@email.com");
+			admin.setFirstName("Admin");
+			admin.setLastName("User");
+			adminService.save(admin);
 			//endregion
 
 			//region Test user

@@ -1,8 +1,9 @@
 package com.group.foodorderapplicationback.service;
 
-import com.group.foodorderapplicationback.model.Account;
+import com.group.foodorderapplicationback.model.Manager;
 
 public interface ManagerService {
-    Account saveManager(Account account);
-    Account getManager(String username);
+    Manager save(Manager manager);
+    Manager getManager(String username);
+    void deleteById(Long id);
 }

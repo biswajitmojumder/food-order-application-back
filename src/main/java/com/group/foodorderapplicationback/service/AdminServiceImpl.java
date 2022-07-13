@@ -1,7 +1,8 @@
 package com.group.foodorderapplicationback.service;
 
-import com.group.foodorderapplicationback.model.DeliveryUser;
+import com.group.foodorderapplicationback.model.Admin;
 import com.group.foodorderapplicationback.model.Role;
+import com.group.foodorderapplicationback.repository.AdminRepository;
 import com.group.foodorderapplicationback.repository.DeliveryUserRepository;
 import com.group.foodorderapplicationback.repository.RoleRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,30 +16,29 @@ import javax.transaction.Transactional;
 @RequiredArgsConstructor
 @Transactional
 @Slf4j
-public class DeliveryUserServiceImpl implements DeliveryUserService {
-
-    private final DeliveryUserRepository deliveryUserRepository;
+public class AdminServiceImpl implements AdminService {
+    private final AdminRepository adminRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public DeliveryUser save(DeliveryUser deliveryUser) {
-        deliveryUser.setPassword(passwordEncoder.encode(deliveryUser.getPassword()));
+    public Admin save(Admin admin) {
+        admin.setPassword(passwordEncoder.encode(admin.getPassword()));
 
-        Role role = roleRepository.findByName("ROLE_DELIVERY_USER");
+        Role role = roleRepository.findByName("ROLE_ADMIN");
 
-        deliveryUser.getRoleList().add(role);
+        admin.getRoleList().add(role);
 
-        return deliveryUserRepository.save(deliveryUser);
+        return adminRepository.save(admin);
     }
 
     @Override
-    public DeliveryUser getDeliveryUser(String username) {
-        return deliveryUserRepository.findByUsername(username);
+    public Admin getAdmin(String username) {
+        return adminRepository.findByUsername(username);
     }
 
     @Override
     public void deleteById(Long id) {
-        deliveryUserRepository.deleteById(id);
+        adminRepository.deleteById(id);
     }
 }

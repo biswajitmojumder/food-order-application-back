@@ -14,4 +14,5 @@ public interface UserService {
 //    List<Account> getAccounts();  //Use pagination
     User saveUser(User user);
     User getUser(String username);
+    void deleteById(Long id);
 }
