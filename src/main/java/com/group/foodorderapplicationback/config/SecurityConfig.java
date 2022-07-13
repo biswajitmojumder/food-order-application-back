@@ -30,7 +30,7 @@ public class SecurityConfig {
 //        http.authorizeRequests().anyRequest().authenticated(); // everyone -> authenticated
 
 //        http.authorizeRequests().anyRequest().permitAll();
-
+//
 //        http.addFilter(new CustomAuthenticationFilter(authenticationManager()));
 //        http.addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);  //! Before everything
 

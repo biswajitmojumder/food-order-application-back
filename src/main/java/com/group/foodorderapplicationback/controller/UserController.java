@@ -1,6 +1,6 @@
 package com.group.foodorderapplicationback.controller;
 
-import com.group.foodorderapplicationback.model.Manager;
+import com.group.foodorderapplicationback.model.Food;
 import com.group.foodorderapplicationback.model.User;
 import com.group.foodorderapplicationback.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -10,7 +10,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.servlet.http.HttpServletRequest;
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -18,6 +20,11 @@ import java.net.URI;
 public class UserController {
 
     private final UserService userService;
+
+    @GetMapping("/user/get-all")
+    public ResponseEntity<List<User>> getAllUsers() {
+        return ResponseEntity.ok().body(userService.findAll());
+    }
 
     @PostMapping("/user/new")
     public ResponseEntity<User> saveUser(@RequestBody User user) {
@@ -41,4 +48,10 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
+
+    @PutMapping(value = "user/add-food-to-favorites", params = "foodId")
+    public ResponseEntity<Food> addFoodToFavorites(HttpServletRequest request, @RequestParam Long foodId) {
+        return ResponseEntity.ok().body(userService.addFoodToFavorites(foodId, request));
+    }
+
 }

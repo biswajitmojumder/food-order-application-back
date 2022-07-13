@@ -9,6 +9,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.Arrays;
+
 @SpringBootApplication
 public class FoodOrderApplicationBackApplication {
 
@@ -80,6 +82,8 @@ public class FoodOrderApplicationBackApplication {
 
 			Restaurant restaurant_2 = new Restaurant();
 			restaurant_2.setName("Restaurantul 2");
+
+			restaurant_1.setFoodList(Arrays.asList(food_1, food_2, food_3, food_4, food_5));
 
 			restaurantService.save(restaurant_1);
 			restaurantService.save(restaurant_2);

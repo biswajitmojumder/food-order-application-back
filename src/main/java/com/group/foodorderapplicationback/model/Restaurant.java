@@ -1,5 +1,6 @@
 package com.group.foodorderapplicationback.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -19,6 +20,7 @@ public class Restaurant {
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     private Address address;
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @ManyToMany
     @JoinTable(name = "restaurant_food",
             joinColumns =@JoinColumn(name="restaurant_id",referencedColumnName = "id"),
