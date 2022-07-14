@@ -23,10 +23,11 @@ public class SecurityConfig {
 
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http.cors();
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-//        http.authorizeRequests().antMatchers("/login", "token/refresh", "/user/save").permitAll(); // open for everyone
-//        http.authorizeRequests().antMatchers(GET, "/**").hasAnyAuthority("ROLE_USER");
+        http.authorizeRequests().antMatchers("/login", "token/refresh", "/user/save").permitAll(); // open for everyone
+        http.authorizeRequests().antMatchers(GET, "/**").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN");
 //        http.authorizeRequests().anyRequest().authenticated(); // everyone -> authenticated
 
         http.authorizeRequests().anyRequest().permitAll();
