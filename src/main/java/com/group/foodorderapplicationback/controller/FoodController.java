@@ -18,7 +18,7 @@ public class FoodController {
 
     @GetMapping(value = "/food", params = "page")
     public ResponseEntity<Page<Food>> getFood(@RequestParam int page) {
-        return ResponseEntity.ok().body(foodService.findAll(PageRequest.of(page, 2)));
+        return ResponseEntity.ok().body(foodService.findAll(PageRequest.of(page, 9)));
     }
 
     @PostMapping(value = "/food/insert", params = "restaurantId")

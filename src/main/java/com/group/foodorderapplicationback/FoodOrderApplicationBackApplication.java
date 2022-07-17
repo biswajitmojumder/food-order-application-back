@@ -56,24 +56,64 @@ public class FoodOrderApplicationBackApplication {
 			//region Food
 			Food food_1 = new Food();
 			food_1.setName("Shaorma");
+			food_1.setDescription("Fast food");
 
 			Food food_2 = new Food();
-			food_2.setName("Pizza Quatro Stagioni");
+			food_2.setName("Pizza Quattro Stagioni");
+			food_2.setDescription("30 cm - normal crust");
 
 			Food food_3 = new Food();
 			food_3.setName("Pizza Diavola");
+			food_3.setDescription("30 cm - normal crust");
 
 			Food food_4 = new Food();
 			food_4.setName("Burger One");
+			food_4.setDescription("Fast food burger");
 
 			Food food_5 = new Food();
 			food_5.setName("Burger Cheese");
+			food_5.setDescription("Burger with cheese");
+
+			Food food_6 = new Food();
+			food_6.setName("Pizza Suprema");
+			food_6.setDescription("30 cm - normal crust");
+
+			Food food_7 = new Food();
+			food_7.setName("Pizza Quattro Formaggi");
+			food_7.setDescription("30 cm - normal crust");
+
+			Food food_8 = new Food();
+			food_8.setName("Pizza Quattro Stagioni - Mixed");
+			food_8.setDescription("30 cm - normal crust");
+
+			Food food_9 = new Food();
+			food_9.setName("Pizza Pepperoni Classic");
+			food_9.setDescription("30 cm - normal crust");
+
+			Food food_10 = new Food();
+			food_10.setName("Pizza Capricciosa");
+			food_10.setDescription("30 cm - normal crust");
+
+			Food food_11 = new Food();
+			food_11.setName("Pizza Carnivora");
+			food_11.setDescription("30 cm - normal crust");
+
+			Food food_12 = new Food();
+			food_12.setName("Pizza Mexicana");
+			food_12.setDescription("30 cm - normal crust");
 
 			foodService.save(food_1);
 			foodService.save(food_2);
 			foodService.save(food_3);
 			foodService.save(food_4);
 			foodService.save(food_5);
+			foodService.save(food_6);
+			foodService.save(food_7);
+			foodService.save(food_8);
+			foodService.save(food_9);
+			foodService.save(food_10);
+			foodService.save(food_11);
+			foodService.save(food_12);
 			//endregion
 
 			//region Restaurant

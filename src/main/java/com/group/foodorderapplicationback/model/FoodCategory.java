@@ -6,5 +6,5 @@ public enum FoodCategory {
     GRILL,
     FAST_FOOD,
     DESSERT,
-    JUICE
+    DRINK
 }
