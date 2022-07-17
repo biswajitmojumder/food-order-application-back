@@ -27,7 +27,7 @@ public class SecurityConfig {
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.authorizeRequests().antMatchers("/login", "token/refresh", "/user/save").permitAll(); // open for everyone
-        http.authorizeRequests().antMatchers(GET, "/food**").permitAll();
+        http.authorizeRequests().antMatchers(GET, "/food**", "/food/**").permitAll();
         http.authorizeRequests().antMatchers(GET, "/**").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN");
 //        http.authorizeRequests().anyRequest().authenticated(); // everyone -> authenticated
 

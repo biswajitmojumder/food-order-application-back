@@ -2,7 +2,7 @@ package com.group.foodorderapplicationback.model;
 
 public enum FoodCategory {
     PIZZA,
-    BURGERS,
+    BURGER,
     GRILL,
     FAST_FOOD,
     DESSERT,

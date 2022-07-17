@@ -1,6 +1,7 @@
 package com.group.foodorderapplicationback.controller;
 
 import com.group.foodorderapplicationback.model.Food;
+import com.group.foodorderapplicationback.model.FoodCategory;
 import com.group.foodorderapplicationback.service.FoodService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -19,6 +20,11 @@ public class FoodController {
     @GetMapping(value = "/food", params = "page")
     public ResponseEntity<Page<Food>> getFood(@RequestParam int page) {
         return ResponseEntity.ok().body(foodService.findAll(PageRequest.of(page, 9)));
+    }
+
+    @GetMapping(value = "/food/{category}")
+    public ResponseEntity<Page<Food>> getFoodByCategory(@PathVariable FoodCategory category, @RequestParam int page) {
+        return ResponseEntity.ok().body(foodService.findByFoodCategory(PageRequest.of(page, 9), category));
     }
 
     @PostMapping(value = "/food/insert", params = "restaurantId")

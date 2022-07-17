@@ -1,6 +1,7 @@
 package com.group.foodorderapplicationback.service;
 
 import com.group.foodorderapplicationback.model.Food;
+import com.group.foodorderapplicationback.model.FoodCategory;
 import com.group.foodorderapplicationback.model.Restaurant;
 import com.group.foodorderapplicationback.repository.FoodRepository;
 import com.group.foodorderapplicationback.repository.RestaurantRepository;
@@ -25,6 +26,11 @@ public class FoodServiceImpl implements FoodService {
     @Override
     public Page<Food> findAll(Pageable pageable) {
         return foodRepository.findAll(pageable);
+    }
+
+    @Override
+    public Page<Food> findByFoodCategory(Pageable pageable, FoodCategory foodCategory) {
+        return foodRepository.findByFoodCategory(pageable, foodCategory);
     }
 
     @Override
