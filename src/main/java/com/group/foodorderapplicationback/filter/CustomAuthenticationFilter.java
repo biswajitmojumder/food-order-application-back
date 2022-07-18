@@ -21,6 +21,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -34,9 +35,6 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-//        x-www-form-urlencoded
-//        String username = request.getParameter("username");
-//        String password = request.getParameter("password");
 
 //        JSON Body
         try {
@@ -60,27 +58,26 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 
         Algorithm algorithm = Algorithm.HMAC256("secret");
 
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DATE, 30);
+
         String accessToken = JWT.create()
                 .withSubject(user.getUsername())
-                .withExpiresAt(new Date(System.currentTimeMillis() + 10 * 60 * 1000))   // 10 minute
+                .withExpiresAt(new Date(System.currentTimeMillis() + 60 * 60 * 1000))   // 60 minute
                 .withIssuer(request.getRequestURL().toString())
                 .withClaim("roles", user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
                 .sign(algorithm);
 
         String refreshToken = JWT.create()
                 .withSubject(user.getUsername())
-                .withExpiresAt(new Date(System.currentTimeMillis() + 30 * 60 * 1000))   // 30 minute
+                .withExpiresAt(calendar.getTime())   // 30 zile
                 .withIssuer(request.getRequestURL().toString())
                 .withClaim("roles", user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
                 .sign(algorithm);
 
-        //============ Header
-//        response.setHeader("access_token", accessToken);  // Set repsonse header
-//        response.setHeader("refresh_token", refreshToken);
-
         //============ Map
         Map<String, String> tokens = new HashMap<>();
-        tokens.put("access_token", accessToken);  // Map
+        tokens.put("access_token", accessToken);
         tokens.put("refresh_token", refreshToken);
 
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
