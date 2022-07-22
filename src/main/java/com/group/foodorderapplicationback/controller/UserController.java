@@ -24,6 +24,11 @@ public class UserController {
 
     private final UserService userService;
 
+    @GetMapping(value = "/user/search")
+    public ResponseEntity<List<User>> getAllUsers(@RequestParam String username, @RequestParam String email) {
+        return ResponseEntity.ok().body(userService.searchByUsernameOrEmail(username, email));
+    }
+
     @GetMapping(value = "/user/get-all", params = "page")
     public ResponseEntity<Page<User>> getAllUsersPaginated(@RequestParam int page) {
         return ResponseEntity.ok().body(userService.findAll(PageRequest.of(page, 9)));

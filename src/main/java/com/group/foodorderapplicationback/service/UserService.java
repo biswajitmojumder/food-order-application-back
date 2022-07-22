@@ -10,11 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public interface UserService {
-//    Account saveAccount(Account account);
-//    Role saveRole(Role role);
-//    void addRoleToAccount(String username, String roleName);
-//    Account getAccount(String username);
-//    List<Account> getAccounts();  //Use pagination
     List<User> findAll();
     User saveUser(User user);
     User getUser(String username);
@@ -25,4 +20,6 @@ public interface UserService {
     List<Orders> findAllOrdersForUser(HttpServletRequest request);
     User getUserInfo(HttpServletRequest request);
     Page<User> findAll(Pageable pageable);
+    List<User> searchByUsernameOrEmail(String username, String email);
+
 }

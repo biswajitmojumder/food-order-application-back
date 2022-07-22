@@ -9,7 +9,6 @@ import com.group.foodorderapplicationback.model.Orders;
 import com.group.foodorderapplicationback.model.Role;
 import com.group.foodorderapplicationback.model.User;
 import com.group.foodorderapplicationback.repository.FoodRepository;
-import com.group.foodorderapplicationback.repository.OrdersRepository;
 import com.group.foodorderapplicationback.repository.RoleRepository;
 import com.group.foodorderapplicationback.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +20,6 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
-
 import java.util.List;
 
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
@@ -136,4 +134,10 @@ public class UserServiceImpl implements UserService {
     public Page<User> findAll(Pageable pageable) {
         return userRepository.findAll(pageable);
     }
+
+    @Override
+    public List<User> searchByUsernameOrEmail(String username, String email) {
+        return userRepository.findByUsernameContainingOrEmailContaining(username, email);
+    }
+
 }
