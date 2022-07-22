@@ -18,6 +18,7 @@ public interface UserService {
     User getUser(String username);
     void deleteById(Long id);
     Food addFoodToFavorites(Long foodId, HttpServletRequest request);
+    void removeFoodFromFavourites(Long id, HttpServletRequest request);
     List<Food> findFavouriteFoodForUser(HttpServletRequest request);
     List<Orders> findAllOrdersForUser(HttpServletRequest request);
     User getUserInfo(HttpServletRequest request);

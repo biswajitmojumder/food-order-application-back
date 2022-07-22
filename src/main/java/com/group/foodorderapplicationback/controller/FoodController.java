@@ -49,4 +49,5 @@ public class FoodController {
     public ResponseEntity<Food> setRestaurant(@PathVariable Long foodId, @PathVariable Long restaurantId) {
         return ResponseEntity.ok().body(foodService.setRestaurant(foodId, restaurantId));
     }
+
 }

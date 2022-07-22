@@ -65,9 +65,21 @@ public class UserController {
         }
     }
 
-    @PutMapping(value = "user/add-food-to-favorites", params = "foodId")
+    @PutMapping(value = "/user/add-food-to-favorites", params = "foodId")
     public ResponseEntity<Food> addFoodToFavorites(HttpServletRequest request, @RequestParam Long foodId) {
         return ResponseEntity.ok().body(userService.addFoodToFavorites(foodId, request));
+    }
+
+    @DeleteMapping(value = "/user/remove-food-from-favourites", params = "id")
+    public ResponseEntity<Long> removeFoodFromFavourites(HttpServletRequest request, @RequestParam Long id) {
+        try {
+            userService.removeFoodFromFavourites(id, request);
+            return ResponseEntity.ok().body(id);
+        }
+        catch (Exception exception) {
+            log.error("Remove food from favourites :: Id not found!");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
     }
 
 }

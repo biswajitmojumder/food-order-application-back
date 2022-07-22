@@ -78,6 +78,20 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void removeFoodFromFavourites(Long id, HttpServletRequest request) {
+        String authorizationHeader = request.getHeader(AUTHORIZATION);
+        String token = authorizationHeader.substring("Bearer ".length());
+        Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());   //debug secret - same as authentication
+        JWTVerifier jwtVerifier = JWT.require(algorithm).build();
+        DecodedJWT decodedJWT = jwtVerifier.verify(token);
+
+        log.info("Removing food from favorites for authorized user: {" + decodedJWT.getSubject() + "}");
+
+        Food food = foodRepository.findById(id).get();
+        userRepository.findByUsername(decodedJWT.getSubject()).getFavouriteFood().remove(food);
+    }
+
+    @Override
     public List<Food> findFavouriteFoodForUser(HttpServletRequest request) {
         String authorizationHeader = request.getHeader(AUTHORIZATION);
         String token = authorizationHeader.substring("Bearer ".length());
