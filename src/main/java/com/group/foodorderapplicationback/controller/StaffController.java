@@ -1,9 +1,6 @@
 package com.group.foodorderapplicationback.controller;
 
-import com.group.foodorderapplicationback.model.Account;
-import com.group.foodorderapplicationback.model.DeliveryUser;
-import com.group.foodorderapplicationback.model.Staff;
-import com.group.foodorderapplicationback.model.User;
+import com.group.foodorderapplicationback.model.*;
 import com.group.foodorderapplicationback.service.StaffService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -12,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.servlet.http.HttpServletRequest;
 import java.net.URI;
 import java.util.List;
 
@@ -48,6 +46,11 @@ public class StaffController {
             log.error("Delete :: Id not found!");
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
+    }
+
+    @GetMapping("/staff/get-staff-info")
+    public ResponseEntity<Staff> getStaffInfo(HttpServletRequest request) {
+        return ResponseEntity.ok().body(staffService.getStaffInfo(request));
     }
 
 }

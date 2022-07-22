@@ -1,6 +1,7 @@
 package com.group.foodorderapplicationback.controller;
 
 import com.group.foodorderapplicationback.model.Account;
+import com.group.foodorderapplicationback.model.Admin;
 import com.group.foodorderapplicationback.model.Manager;
 import com.group.foodorderapplicationback.model.Restaurant;
 import com.group.foodorderapplicationback.service.ManagerService;
@@ -11,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.servlet.http.HttpServletRequest;
 import java.net.URI;
 import java.util.List;
 
@@ -47,6 +49,11 @@ public class ManagerController {
             log.error("Delete :: Id not found!");
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
+    }
+
+    @GetMapping("/manager/get-manager-info")
+    public ResponseEntity<Manager> getManagerInfo(HttpServletRequest request) {
+        return ResponseEntity.ok().body(managerService.getManagerInfo(request));
     }
 
 }

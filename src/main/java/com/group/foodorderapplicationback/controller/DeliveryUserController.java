@@ -1,6 +1,7 @@
 package com.group.foodorderapplicationback.controller;
 
 import com.group.foodorderapplicationback.model.DeliveryUser;
+import com.group.foodorderapplicationback.model.Staff;
 import com.group.foodorderapplicationback.repository.DeliveryUserRepository;
 import com.group.foodorderapplicationback.service.DeliveryUserService;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.servlet.http.HttpServletRequest;
 import java.net.URI;
 import java.util.List;
 
@@ -46,6 +48,11 @@ public class DeliveryUserController {
             log.error("Delete :: Id not found!");
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
+    }
+
+    @GetMapping("/delivery-user/get-delivery-user-info")
+    public ResponseEntity<DeliveryUser> getDeliveryUserInfo(HttpServletRequest request) {
+        return ResponseEntity.ok().body(deliveryUserService.getDeliveryUserInfo(request));
     }
 
 }

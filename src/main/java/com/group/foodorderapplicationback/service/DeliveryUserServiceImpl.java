@@ -1,5 +1,9 @@
 package com.group.foodorderapplicationback.service;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTVerifier;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import com.group.foodorderapplicationback.model.DeliveryUser;
 import com.group.foodorderapplicationback.model.Role;
 import com.group.foodorderapplicationback.repository.DeliveryUserRepository;
@@ -9,8 +13,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 import java.util.List;
+
+import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
 @Service
 @RequiredArgsConstructor
@@ -46,5 +53,18 @@ public class DeliveryUserServiceImpl implements DeliveryUserService {
     @Override
     public void deleteById(Long id) {
         deliveryUserRepository.deleteById(id);
+    }
+
+    @Override
+    public DeliveryUser getDeliveryUserInfo(HttpServletRequest request) {
+        String authorizationHeader = request.getHeader(AUTHORIZATION);
+        String token = authorizationHeader.substring("Bearer ".length());
+        Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());   //debug secret - same as authentication
+        JWTVerifier jwtVerifier = JWT.require(algorithm).build();
+        DecodedJWT decodedJWT = jwtVerifier.verify(token);
+
+        log.info("Getting delivery user info for authorized delivery user: {" + decodedJWT.getSubject() + "}");
+
+        return deliveryUserRepository.findByUsername(decodedJWT.getSubject());
     }
 }
