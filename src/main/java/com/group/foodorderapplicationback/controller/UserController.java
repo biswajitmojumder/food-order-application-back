@@ -6,6 +6,8 @@ import com.group.foodorderapplicationback.model.User;
 import com.group.foodorderapplicationback.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +23,11 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
+
+    @GetMapping(value = "/user/get-all", params = "page")
+    public ResponseEntity<Page<User>> getAllUsersPaginated(@RequestParam int page) {
+        return ResponseEntity.ok().body(userService.findAll(PageRequest.of(page, 9)));
+    }
 
     @GetMapping("/user/get-all")
     public ResponseEntity<List<User>> getAllUsers() {

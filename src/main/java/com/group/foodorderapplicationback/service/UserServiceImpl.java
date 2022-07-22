@@ -14,6 +14,8 @@ import com.group.foodorderapplicationback.repository.RoleRepository;
 import com.group.foodorderapplicationback.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -128,5 +130,10 @@ public class UserServiceImpl implements UserService {
         log.info("Getting user info for authorized user: {" + decodedJWT.getSubject() + "}");
 
         return userRepository.findByUsername(decodedJWT.getSubject());
+    }
+
+    @Override
+    public Page<User> findAll(Pageable pageable) {
+        return userRepository.findAll(pageable);
     }
 }

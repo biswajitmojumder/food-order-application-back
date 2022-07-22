@@ -49,11 +49,62 @@ public class FoodOrderApplicationBackApplication {
 			adminService.save(admin);
 			//endregion
 
-			//region Test user
+			//region Test users
 			User user = new User();
 			user.setUsername("user_1");
 			user.setPassword("password");
+
+			user.setEmail("abc@email.com");
+			user.setFirstName("Firstname");
+			user.setLastName("Lastname");
+			user.setPhoneNumber("0712345690");
+
 			userService.saveUser(user);
+
+			User user_2 = new User();
+			user_2.setUsername("user_2");
+			user_2.setPassword("password");
+			userService.saveUser(user_2);
+
+			User user_3 = new User();
+			user_3.setUsername("user_3");
+			user_3.setPassword("password");
+			userService.saveUser(user_3);
+
+			User user_4 = new User();
+			user_4.setUsername("user_4");
+			user_4.setPassword("password");
+			userService.saveUser(user_4);
+
+			User user_5 = new User();
+			user_5.setUsername("user_5");
+			user_5.setPassword("password");
+			userService.saveUser(user_5);
+
+			User user_6 = new User();
+			user_6.setUsername("user_6");
+			user_6.setPassword("password");
+			userService.saveUser(user_6);
+
+			User user_7 = new User();
+			user_7.setUsername("user_7");
+			user_7.setPassword("password");
+			userService.saveUser(user_7);
+
+			User user_8 = new User();
+			user_8.setUsername("user_8");
+			user_8.setPassword("password");
+			userService.saveUser(user_8);
+
+			User user_9 = new User();
+			user_9.setUsername("user_9");
+			user_9.setPassword("password");
+			userService.saveUser(user_9);
+
+			User user_10 = new User();
+			user_10.setUsername("user_10");
+			user_10.setPassword("password");
+			userService.saveUser(user_10);
 			//endregion
 
 			//region Manager
