@@ -10,6 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -20,6 +21,11 @@ public class ManagerServiceImpl implements ManagerService {
     private final ManagerRepository managerRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
+
+    @Override
+    public List<Manager> findAll() {
+        return (List<Manager>) managerRepository.findAll();
+    }
 
     @Override
     public Manager save(Manager manager) {

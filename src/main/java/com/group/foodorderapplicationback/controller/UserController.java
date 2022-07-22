@@ -37,6 +37,11 @@ public class UserController {
         return ResponseEntity.ok().body(userService.findAllOrdersForUser(request));
     }
 
+    @GetMapping("/user/get-user-info")
+    public ResponseEntity<User> getUserInfo(HttpServletRequest request) {
+        return ResponseEntity.ok().body(userService.getUserInfo(request));
+    }
+
     @PostMapping("/user/new")
     public ResponseEntity<User> saveUser(@RequestBody User user) {
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/user/new").toUriString());    //Status 201 - created

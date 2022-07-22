@@ -28,8 +28,10 @@ public class SecurityConfig {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.authorizeRequests().antMatchers("/login", "/token/refresh", "/user/save").permitAll(); // open for everyone
         http.authorizeRequests().antMatchers(GET, "/food**", "/food/**").permitAll();
-        http.authorizeRequests().antMatchers(GET, "/**").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN");
+//        http.authorizeRequests().antMatchers(GET, "/**").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN");
 //        http.authorizeRequests().anyRequest().authenticated(); // everyone -> authenticated
+
+        http.authorizeRequests().antMatchers(GET, "**").permitAll(); //ALLOW EVERYTHING - DEBUG
 
 //        http.authorizeRequests().anyRequest().permitAll();
 

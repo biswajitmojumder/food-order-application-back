@@ -2,6 +2,7 @@ package com.group.foodorderapplicationback.controller;
 
 import com.group.foodorderapplicationback.model.Account;
 import com.group.foodorderapplicationback.model.Manager;
+import com.group.foodorderapplicationback.model.Restaurant;
 import com.group.foodorderapplicationback.service.ManagerService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -18,6 +20,11 @@ import java.net.URI;
 public class ManagerController {
 
     private final ManagerService managerService;
+
+    @GetMapping("/manager/get-all")
+    public ResponseEntity<List<Manager>> getAllManagers() {
+        return ResponseEntity.ok().body(managerService.findAll());
+    }
 
     @PostMapping("/manager/new")
     public ResponseEntity<Account> saveManager(@RequestBody Manager manager) {

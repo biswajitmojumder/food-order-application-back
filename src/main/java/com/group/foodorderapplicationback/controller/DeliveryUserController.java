@@ -1,6 +1,7 @@
 package com.group.foodorderapplicationback.controller;
 
 import com.group.foodorderapplicationback.model.DeliveryUser;
+import com.group.foodorderapplicationback.repository.DeliveryUserRepository;
 import com.group.foodorderapplicationback.service.DeliveryUserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -17,6 +19,11 @@ import java.net.URI;
 public class DeliveryUserController {
 
     private final DeliveryUserService deliveryUserService;
+
+    @GetMapping("/delivery-user/get-all")
+    public ResponseEntity<List<DeliveryUser>> getAllDeliveryUsers() {
+        return ResponseEntity.ok().body(deliveryUserService.findAll());
+    }
 
     @PostMapping("/delivery-user/new")
     public ResponseEntity<DeliveryUser> saveDeliveryUser(@RequestBody DeliveryUser deliveryUser) {

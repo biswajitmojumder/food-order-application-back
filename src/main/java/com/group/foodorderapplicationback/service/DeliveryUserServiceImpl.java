@@ -10,6 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -20,6 +21,11 @@ public class DeliveryUserServiceImpl implements DeliveryUserService {
     private final DeliveryUserRepository deliveryUserRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
+
+    @Override
+    public List<DeliveryUser> findAll() {
+        return deliveryUserRepository.findAll();
+    }
 
     @Override
     public DeliveryUser save(DeliveryUser deliveryUser) {

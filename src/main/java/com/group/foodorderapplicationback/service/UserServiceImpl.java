@@ -102,4 +102,17 @@ public class UserServiceImpl implements UserService {
 
         return userRepository.findByUsername(decodedJWT.getSubject()).getOrders();
     }
+
+    @Override
+    public User getUserInfo(HttpServletRequest request) {
+        String authorizationHeader = request.getHeader(AUTHORIZATION);
+        String token = authorizationHeader.substring("Bearer ".length());
+        Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());   //debug secret - same as authentication
+        JWTVerifier jwtVerifier = JWT.require(algorithm).build();
+        DecodedJWT decodedJWT = jwtVerifier.verify(token);
+
+        log.info("Getting user info for authorized user: {" + decodedJWT.getSubject() + "}");
+
+        return userRepository.findByUsername(decodedJWT.getSubject());
+    }
 }

@@ -20,4 +20,5 @@ public interface UserService {
     Food addFoodToFavorites(Long foodId, HttpServletRequest request);
     List<Food> findFavouriteFoodForUser(HttpServletRequest request);
     List<Orders> findAllOrdersForUser(HttpServletRequest request);
+    User getUserInfo(HttpServletRequest request);
 }

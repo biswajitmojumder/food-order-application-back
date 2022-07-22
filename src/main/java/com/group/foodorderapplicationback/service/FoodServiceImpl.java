@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -31,6 +32,11 @@ public class FoodServiceImpl implements FoodService {
     @Override
     public Page<Food> findByFoodCategory(Pageable pageable, FoodCategory foodCategory) {
         return foodRepository.findByFoodCategory(pageable, foodCategory);
+    }
+
+    @Override
+    public Page<Food> findByFoodCategoryFromRestaurant(Pageable pageable, FoodCategory foodCategory, Long restaurantId) {
+        return foodRepository.findByFoodCategoryAndRestaurantListId(pageable, foodCategory, restaurantId);
     }
 
     @Override

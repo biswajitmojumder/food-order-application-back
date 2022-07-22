@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -21,8 +22,13 @@ public class StaffController {
 
     private final StaffService staffService;
 
+    @GetMapping("staff/get-all")
+    public ResponseEntity<List<Staff>> getAllStaff() {
+        return ResponseEntity.ok().body(staffService.findAll());
+    }
+
     @PostMapping("/staff/new")
-    public ResponseEntity<Account> saveManager(@RequestBody Staff staff) {
+    public ResponseEntity<Staff> saveManager(@RequestBody Staff staff) {
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/staff/new").toUriString());    //Status 201 - created
         return ResponseEntity.created(uri).body(staffService.save(staff));
     }

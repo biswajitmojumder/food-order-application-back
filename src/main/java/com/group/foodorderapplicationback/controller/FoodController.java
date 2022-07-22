@@ -27,6 +27,13 @@ public class FoodController {
         return ResponseEntity.ok().body(foodService.findByFoodCategory(PageRequest.of(page, 9), category));
     }
 
+    @GetMapping(value = "/food/{category}/{restaurantId}")
+    public ResponseEntity<Page<Food>> getFoodByCategoryFromRestaurant(@PathVariable FoodCategory category,
+                                                                      @PathVariable Long restaurantId,
+                                                                      @RequestParam int page) {
+        return ResponseEntity.ok().body(foodService.findByFoodCategoryFromRestaurant(PageRequest.of(page, 9), category, restaurantId));
+    }
+
     @PostMapping(value = "/food/insert", params = "restaurantId")
     public ResponseEntity<Food> insertFood(@RequestBody Food food, @RequestParam Long restaurantId) {
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/food/insert").toUriString());    //Status 201 - created

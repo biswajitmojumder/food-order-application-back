@@ -10,4 +10,6 @@ import java.util.List;
 
 public interface FoodRepository extends PagingAndSortingRepository<Food, Long> {
     Page<Food> findByFoodCategory(Pageable pageable, FoodCategory foodCategory);
+    Page<Food> findByFoodCategoryAndRestaurantListId(Pageable pageable, FoodCategory foodCategory, Long restaurantId);
+
 }

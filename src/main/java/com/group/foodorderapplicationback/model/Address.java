@@ -1,5 +1,6 @@
 package com.group.foodorderapplicationback.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -12,12 +13,15 @@ public class Address {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String street;
-    private String number;
+    private String streetAddress;
+    private String city;
+    private String zipCode;
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @OneToOne(mappedBy = "address")
     private Restaurant restaurant;
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @OneToOne(mappedBy = "address")
     private Orders order;
 
