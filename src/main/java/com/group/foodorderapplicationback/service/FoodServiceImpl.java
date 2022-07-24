@@ -3,6 +3,7 @@ package com.group.foodorderapplicationback.service;
 import com.group.foodorderapplicationback.model.Food;
 import com.group.foodorderapplicationback.model.FoodCategory;
 import com.group.foodorderapplicationback.model.Restaurant;
+import com.group.foodorderapplicationback.repository.FoodCategoryRepository;
 import com.group.foodorderapplicationback.repository.FoodRepository;
 import com.group.foodorderapplicationback.repository.RestaurantRepository;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +22,7 @@ import java.util.List;
 public class FoodServiceImpl implements FoodService {
 
     private final FoodRepository foodRepository;
+    private final FoodCategoryRepository foodCategoryRepository;
     private final RestaurantRepository restaurantRepository;
 
     @Override
@@ -39,10 +41,16 @@ public class FoodServiceImpl implements FoodService {
     }
 
     @Override
-    public Food insertFood(Food food, Long restaurantId) {
-        Restaurant restaurant = restaurantRepository.findById(restaurantId).get();
-        restaurant.getFoodList().add(food);
-        return foodRepository.save(food);
+    public Food insertFood(Food food, String category, Long[] restaurantId) {
+        FoodCategory foodCategory = foodCategoryRepository.findByName(category);
+        food.setFoodCategory(foodCategory);
+
+        for(int i=0; i<restaurantId.length; i++) {
+            Restaurant restaurant = restaurantRepository.findById(restaurantId[i]).get();
+            restaurant.getFoodList().add(food);
+            foodRepository.save(food);
+        }
+        return food;
     }
 
     @Override
