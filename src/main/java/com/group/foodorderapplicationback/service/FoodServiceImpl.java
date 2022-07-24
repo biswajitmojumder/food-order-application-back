@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -30,13 +29,13 @@ public class FoodServiceImpl implements FoodService {
     }
 
     @Override
-    public Page<Food> findByFoodCategory(Pageable pageable, FoodCategory foodCategory) {
-        return foodRepository.findByFoodCategory(pageable, foodCategory);
+    public Page<Food> findByFoodCategoryName(Pageable pageable, String name) {
+        return foodRepository.findByFoodCategoryName(pageable, name);
     }
 
     @Override
-    public Page<Food> findByFoodCategoryFromRestaurant(Pageable pageable, FoodCategory foodCategory, Long restaurantId) {
-        return foodRepository.findByFoodCategoryAndRestaurantListId(pageable, foodCategory, restaurantId);
+    public Page<Food> findByFoodCategoryNameFromRestaurant(Pageable pageable, String category, Long restaurantId) {
+        return foodRepository.findByFoodCategoryNameAndRestaurantListId(pageable, category, restaurantId);
     }
 
     @Override
@@ -59,5 +58,22 @@ public class FoodServiceImpl implements FoodService {
         restaurant.getFoodList().add(food);
 
         return food;
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        Food food = foodRepository.findById(id).get();
+        List<Restaurant> restaurantList = (List<Restaurant>) restaurantRepository.findAll();
+
+        for(Restaurant restaurant : restaurantList) {
+            restaurant.getFoodList().remove(food);
+        }
+
+        foodRepository.deleteById(id);
+    }
+
+    @Override
+    public Page<Food> searchByFoodCategoryAndRestaurant(Pageable pageable, String foodCategory, String restaurantName) {
+        return foodRepository.findByFoodCategoryNameContainsAndRestaurantListNameContains(pageable, foodCategory, restaurantName);
     }
 }

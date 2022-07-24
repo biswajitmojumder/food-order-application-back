@@ -23,7 +23,7 @@ public class Food {
     private String price;
     private String weight;
 
-    @Enumerated(EnumType.STRING)
+    @ManyToOne
     private FoodCategory foodCategory;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)

@@ -7,9 +7,11 @@ import org.springframework.data.domain.Pageable;
 
 public interface FoodService {
     Page<Food> findAll(Pageable pageable);
-    Page<Food> findByFoodCategory(Pageable pageable, FoodCategory foodCategory);
-    Page<Food> findByFoodCategoryFromRestaurant(Pageable pageable, FoodCategory foodCategory, Long restaurantId);
+    Page<Food> findByFoodCategoryName(Pageable pageable, String categoryName);
+    Page<Food> findByFoodCategoryNameFromRestaurant(Pageable pageable, String category, Long restaurantId);
     Food insertFood(Food food, Long restaurantId);
     Food save(Food food);
     Food setRestaurant(Long foodId, Long restaurantId);
+    void deleteById(Long id);
+    Page<Food> searchByFoodCategoryAndRestaurant(Pageable pageable, String foodCategory, String restaurantName);
 }
