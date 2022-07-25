@@ -20,6 +20,11 @@ import java.net.URI;
 public class FoodController {
     private final FoodService foodService;
 
+    @GetMapping(value = "/food")
+    public ResponseEntity<Food> getFood(@RequestParam Long id) {
+        return ResponseEntity.ok().body(foodService.findById(id).get());
+    }
+
     @GetMapping(value = "/food", params = "page")
     public ResponseEntity<Page<Food>> getFood(@RequestParam int page) {
         return ResponseEntity.ok().body(foodService.findAll(PageRequest.of(page, 9)));
@@ -55,7 +60,7 @@ public class FoodController {
 
     @PutMapping(value = "/food/update")
     public ResponseEntity<Food> updateFood(@RequestBody Food food) {
-        return ResponseEntity.ok().body(foodService.save(food));
+        return ResponseEntity.ok().body(foodService.update(food));
     }
 
     @PutMapping(value = "/food/set-restaurant/{foodId}/{restaurantId}")

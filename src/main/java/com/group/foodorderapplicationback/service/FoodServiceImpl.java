@@ -13,7 +13,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -59,6 +61,36 @@ public class FoodServiceImpl implements FoodService {
     }
 
     @Override
+    public Food update(Food food) {
+        Food updatedFood = foodRepository.findById(food.getId()).get();
+        FoodCategory foodCategory = foodCategoryRepository.findByName(food.getFoodCategory().getName());
+
+        updatedFood.setName(food.getName());
+        updatedFood.setDescription(food.getDescription());
+        updatedFood.setPrice(food.getPrice());
+        updatedFood.setWeight(food.getWeight());
+        updatedFood.setFoodCategory(foodCategory);
+
+        //Remove from all restaurants
+        List<Restaurant> allRestaurantsList = (List<Restaurant>) restaurantRepository.findAll();
+        for(Restaurant restaurant : allRestaurantsList) {
+            for(int i=0; i<restaurant.getFoodList().size(); i++) {
+                if(restaurant.getFoodList().get(i).getId() == food.getId()) {
+                    restaurant.getFoodList().remove(i);
+                }
+            }
+        }
+
+        //Add to the requested restaurants
+        for(Restaurant restaurant : food.getRestaurantList()) {
+            Restaurant repoRestaurant = restaurantRepository.findById(restaurant.getId()).get();
+            repoRestaurant.getFoodList().add(updatedFood);
+        }
+
+        return foodRepository.save(updatedFood);
+    }
+
+    @Override
     public Food setRestaurant(Long foodId, Long restaurantId) {
         Food food = foodRepository.findById(foodId).get();
         Restaurant restaurant = restaurantRepository.findById(restaurantId).get();
@@ -66,6 +98,11 @@ public class FoodServiceImpl implements FoodService {
         restaurant.getFoodList().add(food);
 
         return food;
+    }
+
+    @Override
+    public Optional<Food> findById(Long id) {
+        return foodRepository.findById(id);
     }
 
     @Override
@@ -82,6 +119,6 @@ public class FoodServiceImpl implements FoodService {
 
     @Override
     public Page<Food> searchByFoodCategoryAndRestaurant(Pageable pageable, String foodCategory, String restaurantName) {
-        return foodRepository.findByFoodCategoryNameContainsAndRestaurantListNameContains(pageable, foodCategory, restaurantName);
+        return foodRepository.findDistinctByFoodCategoryNameContainsAndRestaurantListNameContains(pageable, foodCategory, restaurantName);
     }
 }
