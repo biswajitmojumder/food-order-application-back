@@ -14,6 +14,6 @@ public interface FoodRepository extends PagingAndSortingRepository<Food, Long>, 
     Page<Food> findByFoodCategoryNameAndRestaurantListId(Pageable pageable, String category, Long restaurantId);
 
 
-    Page<Food> findDistinctByFoodCategoryNameContainsAndRestaurantListNameContains(Pageable pageable, String foodCategory, String restaurantName);
+    Page<Food> findDistinctByFoodCategoryNameContainsAndRestaurantListNameContainsOrderById(Pageable pageable, String foodCategory, String restaurantName);
 
 }

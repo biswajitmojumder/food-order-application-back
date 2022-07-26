@@ -26,11 +26,16 @@ public class ImageServiceImpl implements ImageService {
     }
 
     @Override
-    public void save(MultipartFile multipartFile){
+    public Image findByResourceName(String uuid) {
+        return imageRepository.findByResourceName(uuid);
+    }
+
+    @Override
+    public Image save(MultipartFile multipartFile){
 
         String resourceLocation = fileStorageService.save(multipartFile, "Images", true);
 
-        imageRepository.save(Image.builder()
+        return imageRepository.save(Image.builder()
                 .name(multipartFile.getOriginalFilename())
                 .type(multipartFile.getContentType())
                 .resourceName(resourceLocation)

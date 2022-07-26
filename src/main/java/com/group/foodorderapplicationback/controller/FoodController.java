@@ -1,8 +1,9 @@
 package com.group.foodorderapplicationback.controller;
 
 import com.group.foodorderapplicationback.model.Food;
-import com.group.foodorderapplicationback.model.FoodCategory;
+import com.group.foodorderapplicationback.model.Image;
 import com.group.foodorderapplicationback.service.FoodService;
+import com.group.foodorderapplicationback.service.ImageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -10,6 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
@@ -19,6 +21,7 @@ import java.net.URI;
 @Slf4j
 public class FoodController {
     private final FoodService foodService;
+    private final ImageService imageService;
 
     @GetMapping(value = "/food")
     public ResponseEntity<Food> getFood(@RequestParam Long id) {
@@ -66,6 +69,20 @@ public class FoodController {
     @PutMapping(value = "/food/set-restaurant/{foodId}/{restaurantId}")
     public ResponseEntity<Food> setRestaurant(@PathVariable Long foodId, @PathVariable Long restaurantId) {
         return ResponseEntity.ok().body(foodService.setRestaurant(foodId, restaurantId));
+    }
+
+    @PutMapping(value = "/food/set-image/{foodId}")
+    public ResponseEntity<?> setFoodImage(@PathVariable Long foodId, @RequestParam("uuid") String uuid) {
+        try {
+            Food food = foodService.findById(foodId).get();
+            Image image = imageService.findByResourceName(uuid);
+            food.setFoodImage(image);
+            foodService.save(food);
+
+            return ResponseEntity.ok().body(food);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
+        }
     }
 
     @DeleteMapping(value = "/food/delete", params = "id")

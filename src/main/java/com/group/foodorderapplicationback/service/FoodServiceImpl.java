@@ -118,6 +118,6 @@ public class FoodServiceImpl implements FoodService {
 
     @Override
     public Page<Food> searchByFoodCategoryAndRestaurant(Pageable pageable, String foodCategory, String restaurantName) {
-        return foodRepository.findDistinctByFoodCategoryNameContainsAndRestaurantListNameContains(pageable, foodCategory, restaurantName);
+        return foodRepository.findDistinctByFoodCategoryNameContainsAndRestaurantListNameContainsOrderById(pageable, foodCategory, restaurantName);
     }
 }

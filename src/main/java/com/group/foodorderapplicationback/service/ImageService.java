@@ -8,6 +8,7 @@ import java.io.IOException;
 
 public interface ImageService {
     Image findByName(String name);
-    void save(MultipartFile multipartFile) throws IOException;
+    Image findByResourceName(String uuid);
+    Image save(MultipartFile multipartFile) throws IOException;
     Resource load(String filename);
 }

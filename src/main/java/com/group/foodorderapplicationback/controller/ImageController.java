@@ -1,5 +1,6 @@
 package com.group.foodorderapplicationback.controller;
 
+import com.group.foodorderapplicationback.model.Image;
 import com.group.foodorderapplicationback.service.ImageService;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,12 +25,12 @@ public class ImageController {
     @PostMapping("/upload/image")
     public ResponseEntity<ImageUploadResponse> uploadImage(@RequestParam("image") MultipartFile file) {
         try {
-            imageService.save(file);
+            Image image = imageService.save(file);
             return ResponseEntity.ok()
-                .body(new ImageUploadResponse("Uploaded the file successfully: " + file.getOriginalFilename()));
+                .body(new ImageUploadResponse("Uploaded the file successfully: " + file.getOriginalFilename(), image));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED)
-                .body(new ImageUploadResponse("Couldn't upload the file: " + file.getOriginalFilename()));
+                .body(new ImageUploadResponse("Couldn't upload the file: " + file.getOriginalFilename(), null));
         }
     }
 
@@ -45,5 +46,6 @@ public class ImageController {
     @AllArgsConstructor
     public class ImageUploadResponse {
         private String message;
+        private Image image;
     }
 }
