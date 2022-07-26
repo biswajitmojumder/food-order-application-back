@@ -42,15 +42,17 @@ public class FoodServiceImpl implements FoodService {
     }
 
     @Override
-    public Food insertFood(Food food, String category, Long[] restaurantId) {
-        FoodCategory foodCategory = foodCategoryRepository.findByName(category);
+    public Food insertFood(Food food) {
+        FoodCategory foodCategory = foodCategoryRepository.findByName(food.getFoodCategory().getName());
         food.setFoodCategory(foodCategory);
+        foodRepository.save(food);
 
-        for(int i=0; i<restaurantId.length; i++) {
-            Restaurant restaurant = restaurantRepository.findById(restaurantId[i]).get();
+        for(int i=0; i<food.getRestaurantList().size(); i++) {
+            Restaurant restaurant = restaurantRepository.findById(food.getRestaurantList().get(i).getId()).get();
             restaurant.getFoodList().add(food);
-            foodRepository.save(food);
+            restaurantRepository.save(restaurant);
         }
+
         return food;
     }
 

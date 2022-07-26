@@ -10,7 +10,7 @@ public interface FoodService {
     Page<Food> findAll(Pageable pageable);
     Page<Food> findByFoodCategoryName(Pageable pageable, String categoryName);
     Page<Food> findByFoodCategoryNameFromRestaurant(Pageable pageable, String category, Long restaurantId);
-    Food insertFood(Food food, String category, Long[] restaurantId);
+    Food insertFood(Food food);
     Food update(Food food);
     Food save(Food food);
     Food setRestaurant(Long foodId, Long restaurantId);

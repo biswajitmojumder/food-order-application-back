@@ -56,9 +56,9 @@ public class FoodController {
     }
 
     @PostMapping(value = "/food/insert")
-    public ResponseEntity<Food> insertFood(@RequestBody Food food, @RequestParam String category, @RequestParam Long[] restaurantId) {
+    public ResponseEntity<Food> insertFood(@RequestBody Food food) {
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/food/insert").toUriString());    //Status 201 - created
-        return ResponseEntity.created(uri).body(foodService.insertFood(food, category, restaurantId));
+        return ResponseEntity.created(uri).body(foodService.insertFood(food));
     }
 
     @PutMapping(value = "/food/update")
