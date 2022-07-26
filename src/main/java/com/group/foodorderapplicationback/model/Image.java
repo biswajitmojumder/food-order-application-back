@@ -19,7 +19,9 @@ public class Image {
 
     private String name;
     private String type;
+    private String resourceName;
 
-    @Column(unique = false, nullable = false, length = 500000)
-    private byte[] image;
+    @OneToOne(mappedBy = "foodImage")
+    private Food food;
+
 }

@@ -23,6 +23,9 @@ public class Food {
     private String price;
     private String weight;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    private Image foodImage;
+
     @ManyToOne
     private FoodCategory foodCategory;
 

@@ -32,8 +32,12 @@ public class FoodOrderApplicationBackApplication {
 						  ManagerService managerService,
 						  RestaurantService restaurantService,
 						  StaffService staffService,
-						  DeliveryUserService deliveryUserService) {
+						  DeliveryUserService deliveryUserService,
+						  FileStorageService fileStorageService) {
 		return args -> {
+			//INIT FILE STORAGE
+			fileStorageService.init();
+
 			//region Roles + Admin account
 			accountService.saveRole(new Role(null, "ROLE_USER", null));
 			accountService.saveRole(new Role(null, "ROLE_DELIVERY_USER", null));
