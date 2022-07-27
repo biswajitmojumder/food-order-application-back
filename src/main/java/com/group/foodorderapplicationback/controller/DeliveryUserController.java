@@ -1,7 +1,9 @@
 package com.group.foodorderapplicationback.controller;
 
 import com.group.foodorderapplicationback.model.DeliveryUser;
+import com.group.foodorderapplicationback.model.Orders;
 import com.group.foodorderapplicationback.model.Staff;
+import com.group.foodorderapplicationback.model.User;
 import com.group.foodorderapplicationback.repository.DeliveryUserRepository;
 import com.group.foodorderapplicationback.service.DeliveryUserService;
 import lombok.RequiredArgsConstructor;
@@ -53,6 +55,16 @@ public class DeliveryUserController {
     @GetMapping("/delivery-user/get-delivery-user-info")
     public ResponseEntity<DeliveryUser> getDeliveryUserInfo(HttpServletRequest request) {
         return ResponseEntity.ok().body(deliveryUserService.getDeliveryUserInfo(request));
+    }
+
+    @PutMapping("/delivery-user/take-order")
+    public ResponseEntity<Orders> updateUser(HttpServletRequest request, @RequestParam Long id) {
+        return ResponseEntity.ok().body(deliveryUserService.takeOrder(request, id));
+    }
+
+    @GetMapping("/delivery-user/active-order")
+    public ResponseEntity<Orders> getDeliveryUserActiveOrder(HttpServletRequest request) {
+        return ResponseEntity.ok().body(deliveryUserService.getActiveOrder(request));
     }
 
 }

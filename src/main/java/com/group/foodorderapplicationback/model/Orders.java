@@ -17,7 +17,7 @@ public class Orders {
     @ManyToOne
     private User user;
 
-    @OneToOne
+    @ManyToOne
     private DeliveryUser deliveryUser;
 
     @ManyToMany
@@ -26,7 +26,7 @@ public class Orders {
         inverseJoinColumns =@JoinColumn(name="food_id",referencedColumnName="id"))
     private List<Food> foodList;
 
-    private LocalDateTime orderDateTime;
+    private LocalDateTime dateTime;
 
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;

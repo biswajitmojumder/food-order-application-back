@@ -5,8 +5,10 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.group.foodorderapplicationback.model.DeliveryUser;
+import com.group.foodorderapplicationback.model.Orders;
 import com.group.foodorderapplicationback.model.Role;
 import com.group.foodorderapplicationback.repository.DeliveryUserRepository;
+import com.group.foodorderapplicationback.repository.OrdersRepository;
 import com.group.foodorderapplicationback.repository.RoleRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +28,7 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 public class DeliveryUserServiceImpl implements DeliveryUserService {
 
     private final DeliveryUserRepository deliveryUserRepository;
+    private final OrdersRepository ordersRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
 
@@ -46,11 +49,6 @@ public class DeliveryUserServiceImpl implements DeliveryUserService {
     }
 
     @Override
-    public DeliveryUser getDeliveryUser(String username) {
-        return deliveryUserRepository.findByUsername(username);
-    }
-
-    @Override
     public void deleteById(Long id) {
         deliveryUserRepository.deleteById(id);
     }
@@ -66,5 +64,37 @@ public class DeliveryUserServiceImpl implements DeliveryUserService {
         log.info("Getting delivery user info for authorized delivery user: {" + decodedJWT.getSubject() + "}");
 
         return deliveryUserRepository.findByUsername(decodedJWT.getSubject());
+    }
+
+    @Override
+    public Orders takeOrder(HttpServletRequest request, Long id) {
+        String authorizationHeader = request.getHeader(AUTHORIZATION);
+        String token = authorizationHeader.substring("Bearer ".length());
+        Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());   //debug secret - same as authentication
+        JWTVerifier jwtVerifier = JWT.require(algorithm).build();
+        DecodedJWT decodedJWT = jwtVerifier.verify(token);
+
+        log.info("Setting authorized delivery user: {" + decodedJWT.getSubject() + "} to order with id {" + id + "}");
+
+        DeliveryUser deliveryUser = deliveryUserRepository.findByUsername(decodedJWT.getSubject());
+        Orders order = ordersRepository.findById(id).get();
+        order.setDeliveryUser(deliveryUser);
+        ordersRepository.save(order);
+
+        return order;
+    }
+
+    @Override
+    public Orders getActiveOrder(HttpServletRequest request) {
+        String authorizationHeader = request.getHeader(AUTHORIZATION);
+        String token = authorizationHeader.substring("Bearer ".length());
+        Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
+        JWTVerifier jwtVerifier = JWT.require(algorithm).build();
+        DecodedJWT decodedJWT = jwtVerifier.verify(token);
+
+        log.info("Getting active order for authorized delivery user: {" + decodedJWT.getSubject() + "}");
+
+        List<Orders> orderListAscending = ordersRepository.findAllByOrderByDateTimeDesc();
+        return orderListAscending.get(0);
     }
 }

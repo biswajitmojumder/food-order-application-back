@@ -77,7 +77,7 @@ public class OrdersServiceImpl implements OrdersService {
         Orders newOrder = new Orders();
         newOrder.setUser(user);
         newOrder.setOrderStatus(OrderStatus.RECEIVED);
-        newOrder.setOrderDateTime(LocalDateTime.now());
+        newOrder.setDateTime(LocalDateTime.now());
 
         List<Food> foodList = new ArrayList<>();
 
