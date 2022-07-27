@@ -434,10 +434,11 @@ public class FoodOrderApplicationBackApplication {
 			restaurant_1.setName("Restaurantul 1");
 			restaurant_1.setDescription("The main restaurant");
 
-			Address address_1 = new Address();
-			address_1.setStreetAddress("Str. Abc nr. 222 sect. 3");
-			address_1.setCity("Bucharest");
-			address_1.setZipCode("012123");
+			Address address_1 = Address.builder()
+						.streetAddress("Str. Abc nr. 222 sect. 3")
+						.city("Bucharest")
+						.zipCode("012123")
+						.build();
 
 			restaurant_1.setAddress(address_1);
 
@@ -445,10 +446,11 @@ public class FoodOrderApplicationBackApplication {
 			restaurant_2.setName("Restaurantul 2");
 			restaurant_2.setDescription("The secondary restaurant");
 
-			Address address_2 = new Address();
-			address_2.setStreetAddress("Str. Def nr. 100 sect. 1");
-			address_2.setCity("Bucharest");
-			address_2.setZipCode("010223");
+			Address address_2 = Address.builder()
+						.streetAddress("Str. Def nr. 100 sect. 1")
+						.city("Bucharest")
+						.zipCode("010223")
+						.build();
 
 			restaurant_2.setAddress(address_2);
 

@@ -4,18 +4,19 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.group.foodorderapplicationback.model.OrderStatus;
-import com.group.foodorderapplicationback.model.Orders;
-import com.group.foodorderapplicationback.model.User;
+import com.group.foodorderapplicationback.model.*;
+import com.group.foodorderapplicationback.repository.AddressRepository;
+import com.group.foodorderapplicationback.repository.FoodRepository;
 import com.group.foodorderapplicationback.repository.OrdersRepository;
 import com.group.foodorderapplicationback.repository.UserRepository;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,6 +30,8 @@ public class OrdersServiceImpl implements OrdersService {
 
     private final OrdersRepository ordersRepository;
     private final UserRepository userRepository;
+    private final FoodRepository foodRepository;
+    private final AddressRepository addressRepository;
 
     @Override
     public List<Orders> findAll() {
@@ -60,6 +63,7 @@ public class OrdersServiceImpl implements OrdersService {
 
     @Override
     public Orders insertOrderForAuthenticatedUser(HttpServletRequest request, Orders order) {
+
         String authorizationHeader = request.getHeader(AUTHORIZATION);
         String token = authorizationHeader.substring("Bearer ".length());
         Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());   //debug secret - same as authentication
@@ -71,9 +75,32 @@ public class OrdersServiceImpl implements OrdersService {
         User user = userRepository.findByUsername(decodedJWT.getSubject());
 
         Orders newOrder = new Orders();
-
         newOrder.setUser(user);
         newOrder.setOrderStatus(OrderStatus.RECEIVED);
+        newOrder.setOrderDateTime(LocalDateTime.now());
+
+        List<Food> foodList = new ArrayList<>();
+
+        for(int i=0; i<order.getFoodList().size(); i++) {
+            Food food = foodRepository.findById(order.getFoodList().get(i).getId()).get();
+            foodList.add(food);
+        }
+
+        newOrder.setFoodList(foodList);
+
+        Optional<Address> newAddress = addressRepository.findByStreetAddress(order.getAddress().getStreetAddress());
+
+        if(newAddress.isPresent()) {
+            newOrder.setAddress(newAddress.get());
+        }
+        else {
+            Address address = Address.builder()
+                .streetAddress(order.getAddress().getStreetAddress())
+                .city(order.getAddress().getCity())
+                .zipCode(order.getAddress().getZipCode())
+                .build();
+            newOrder.setAddress(address);
+        }
 
         return ordersRepository.save(newOrder);
     }

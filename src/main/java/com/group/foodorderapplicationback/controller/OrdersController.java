@@ -1,8 +1,13 @@
 package com.group.foodorderapplicationback.controller;
 
+import com.group.foodorderapplicationback.model.Address;
+import com.group.foodorderapplicationback.model.Food;
 import com.group.foodorderapplicationback.model.OrderStatus;
 import com.group.foodorderapplicationback.model.Orders;
 import com.group.foodorderapplicationback.service.OrdersService;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -52,5 +57,13 @@ public class OrdersController {
     @PutMapping(value = "/orders/set-rejected-status", params = "id")
     public ResponseEntity<Orders> setRejectedStatus(@RequestParam Long id) {
         return ResponseEntity.ok().body(ordersService.setRejectedStatus(id));
+    }
+
+    @Getter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class OrderMap {
+        List<Food> foodList;
+        Address address;
     }
 }
