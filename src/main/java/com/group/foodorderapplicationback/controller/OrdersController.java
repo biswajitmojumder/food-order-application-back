@@ -29,7 +29,7 @@ public class OrdersController {
 
     @GetMapping(value = "/orders", params = "status")
     public ResponseEntity<List<Orders>> getAllOrdersByOrderStatus(@RequestParam OrderStatus status) {
-        return ResponseEntity.ok().body(ordersService.findByOrderStatus(status));
+        return ResponseEntity.ok().body(ordersService.findAllByOrderStatus(status));
     }
 
     @PostMapping(value = "/orders/new", params = "userId")
@@ -42,6 +42,11 @@ public class OrdersController {
     public ResponseEntity<Orders> newOrder(HttpServletRequest request, @RequestBody Orders order) {
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/orders/new-authenticated").toUriString());    //Status 201 - created
         return ResponseEntity.created(uri).body(ordersService.insertOrderForAuthenticatedUser(request, order));
+    }
+
+    @PutMapping(value = "/orders/accept-order")
+    public ResponseEntity<Orders> setAcceptedStatus(@RequestParam Long id) {
+        return ResponseEntity.ok().body(ordersService.setAcceptedStatus(id));
     }
 
     @PutMapping(value = "/orders/next-status", params = "id")

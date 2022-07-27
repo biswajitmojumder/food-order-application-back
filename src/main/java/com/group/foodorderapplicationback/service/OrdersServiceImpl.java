@@ -39,8 +39,8 @@ public class OrdersServiceImpl implements OrdersService {
     }
 
     @Override
-    public List<Orders> findByOrderStatus(OrderStatus orderStatus) {
-        return ordersRepository.findByOrderStatus(orderStatus);
+    public List<Orders> findAllByOrderStatus(OrderStatus orderStatus) {
+        return ordersRepository.findAllByOrderStatus(orderStatus);
     }
 
     @Override
@@ -99,6 +99,8 @@ public class OrdersServiceImpl implements OrdersService {
                 .city(order.getAddress().getCity())
                 .zipCode(order.getAddress().getZipCode())
                 .build();
+
+            addressRepository.save(address);
             newOrder.setAddress(address);
         }
 
@@ -118,6 +120,14 @@ public class OrdersServiceImpl implements OrdersService {
             OrderStatus orderStatus = OrderStatus.values()[order.getOrderStatus().ordinal() + 1];
             order.setOrderStatus(orderStatus);
         }
+
+        return order;
+    }
+
+    @Override
+    public Orders setAcceptedStatus(Long orderId) {
+        Orders order = ordersRepository.findById(orderId).get();
+        order.setOrderStatus(OrderStatus.ACCEPTED);
 
         return order;
     }

@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Data
@@ -28,7 +29,7 @@ public class Address {
     private Restaurant restaurant;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @OneToOne(mappedBy = "address")
-    private Orders order;
+    @OneToMany(mappedBy = "address")
+    private List<Orders> orderList;
 
 }
