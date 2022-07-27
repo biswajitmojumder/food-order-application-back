@@ -49,9 +49,14 @@ public class OrdersController {
         return ResponseEntity.ok().body(ordersService.setAcceptedStatus(id));
     }
 
-    @PutMapping(value = "/orders/next-status", params = "id")
-    public ResponseEntity<Orders> nextStatus(@RequestParam Long id) {
-        return ResponseEntity.ok().body(ordersService.nextStatus(id));
+    @PutMapping(value = "/orders/prepare-order")
+    public ResponseEntity<Orders> setPreparingStatus(@RequestParam Long id) {
+        return ResponseEntity.ok().body(ordersService.setPreparingStatus(id));
+    }
+
+    @PutMapping(value = "/orders/on-the-way")
+    public ResponseEntity<Orders> setOnTheWayStatus(@RequestParam Long id) {
+        return ResponseEntity.ok().body(ordersService.setOnTheWay(id));
     }
 
     @PutMapping(value = "/orders/set-delivered-status", params = "id")

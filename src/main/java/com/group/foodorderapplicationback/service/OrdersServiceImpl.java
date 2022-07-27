@@ -133,6 +133,22 @@ public class OrdersServiceImpl implements OrdersService {
     }
 
     @Override
+    public Orders setPreparingStatus(Long orderId) {
+        Orders order = ordersRepository.findById(orderId).get();
+        order.setOrderStatus(OrderStatus.PREPARING);
+
+        return order;
+    }
+
+    @Override
+    public Orders setOnTheWay(Long orderId) {
+        Orders order = ordersRepository.findById(orderId).get();
+        order.setOrderStatus(OrderStatus.ON_THE_WAY);
+
+        return order;
+    }
+
+    @Override
     public Orders setDeliveredStatus(Long orderId) {
         Orders order = ordersRepository.findById(orderId).get();
         order.setOrderStatus(OrderStatus.DELIVERED);
