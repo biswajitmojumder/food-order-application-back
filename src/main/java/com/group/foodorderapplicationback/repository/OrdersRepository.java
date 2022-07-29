@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface OrdersRepository extends CrudRepository<Orders, Long> {
     List<Orders> findAllByOrderStatus(OrderStatus orderStatus);
-    List<Orders> findAllByOrderByDateTimeDesc();
+    List<Orders> findAllByDeliveryUserUsernameAndOrderStatusNotOrderByDateTimeDesc(String username, OrderStatus orderStatus);
 }

@@ -5,6 +5,7 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.group.foodorderapplicationback.model.DeliveryUser;
+import com.group.foodorderapplicationback.model.OrderStatus;
 import com.group.foodorderapplicationback.model.Orders;
 import com.group.foodorderapplicationback.model.Role;
 import com.group.foodorderapplicationback.repository.DeliveryUserRepository;
@@ -94,7 +95,12 @@ public class DeliveryUserServiceImpl implements DeliveryUserService {
 
         log.info("Getting active order for authorized delivery user: {" + decodedJWT.getSubject() + "}");
 
-        List<Orders> orderListAscending = ordersRepository.findAllByOrderByDateTimeDesc();
-        return orderListAscending.get(0);
+        List<Orders> orderListDesc =
+                ordersRepository.findAllByDeliveryUserUsernameAndOrderStatusNotOrderByDateTimeDesc(decodedJWT.getSubject(), OrderStatus.DELIVERED);
+        if(orderListDesc.size() > 0) {
+            return orderListDesc.get(0);
+        }
+
+        return null;
     }
 }
