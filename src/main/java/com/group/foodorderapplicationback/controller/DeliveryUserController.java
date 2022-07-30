@@ -58,7 +58,7 @@ public class DeliveryUserController {
     }
 
     @PutMapping("/delivery-user/take-order")
-    public ResponseEntity<Orders> updateUser(HttpServletRequest request, @RequestParam Long id) {
+    public ResponseEntity<Orders> takeOrder(HttpServletRequest request, @RequestParam Long id) {
         return ResponseEntity.ok().body(deliveryUserService.takeOrder(request, id));
     }
 

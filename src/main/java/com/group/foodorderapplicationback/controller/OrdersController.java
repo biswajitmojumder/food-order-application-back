@@ -27,6 +27,11 @@ public class OrdersController {
         return ResponseEntity.ok().body(ordersService.findAll());
     }
 
+    @GetMapping(value = "/orders/accepted")
+    public ResponseEntity<List<Orders>> getAllAcceptedOrders() {
+        return ResponseEntity.ok().body(ordersService.findAllAcceptedOrders());
+    }
+
     @GetMapping(value = "/orders", params = "status")
     public ResponseEntity<List<Orders>> getAllOrdersByOrderStatus(@RequestParam OrderStatus status) {
         return ResponseEntity.ok().body(ordersService.findAllByOrderStatus(status));

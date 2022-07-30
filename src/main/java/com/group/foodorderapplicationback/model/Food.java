@@ -36,7 +36,6 @@ public class Food {
     @OneToMany(mappedBy = "food", cascade = CascadeType.ALL)
     private List<Review> foodReview;
 
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @ManyToMany(mappedBy = "foodList")
     private List<Restaurant> restaurantList;
 

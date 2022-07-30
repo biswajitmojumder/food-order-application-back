@@ -11,10 +11,10 @@ import java.util.List;
 public interface OrdersService {
 
     List<Orders> findAll();
+    List<Orders> findAllAcceptedOrders();
     List<Orders> findAllByOrderStatus(OrderStatus orderStatus);
     Orders insertOrder(Long userId, Orders order);
     Orders insertOrderForAuthenticatedUser(HttpServletRequest request, Orders order);
-    Orders nextStatus(Long orderId);
     Orders setAcceptedStatus(Long orderId);
     Orders setPreparingStatus(Long orderId);
     Orders setOnTheWay(Long orderId);

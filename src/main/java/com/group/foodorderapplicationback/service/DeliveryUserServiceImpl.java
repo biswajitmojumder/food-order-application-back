@@ -4,6 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.group.foodorderapplicationback.exception.ApiRequestException;
 import com.group.foodorderapplicationback.model.DeliveryUser;
 import com.group.foodorderapplicationback.model.OrderStatus;
 import com.group.foodorderapplicationback.model.Orders;
@@ -78,6 +79,18 @@ public class DeliveryUserServiceImpl implements DeliveryUserService {
         log.info("Setting authorized delivery user: {" + decodedJWT.getSubject() + "} to order with id {" + id + "}");
 
         DeliveryUser deliveryUser = deliveryUserRepository.findByUsername(decodedJWT.getSubject());
+
+        if(deliveryUser == null) {
+            throw new ApiRequestException("Delivery User not found in database!");
+        }
+
+        OrderStatus[] orderStatuses = {OrderStatus.DELIVERED, OrderStatus.REJECTED};
+        Orders activeOrder = ordersRepository.findByDeliveryUserUsernameAndOrderStatusNotIn(decodedJWT.getSubject(), orderStatuses);
+
+        if(activeOrder != null) {
+            throw new ApiRequestException("Delivery User has active orders!");
+        }
+
         Orders order = ordersRepository.findById(id).get();
         order.setDeliveryUser(deliveryUser);
         ordersRepository.save(order);

@@ -39,6 +39,12 @@ public class OrdersServiceImpl implements OrdersService {
     }
 
     @Override
+    public List<Orders> findAllAcceptedOrders() {
+        OrderStatus[] orderStatuses = {OrderStatus.RECEIVED, OrderStatus.REJECTED};
+        return ordersRepository.findAllByOrderStatusNotIn(orderStatuses);
+    }
+
+    @Override
     public List<Orders> findAllByOrderStatus(OrderStatus orderStatus) {
         return ordersRepository.findAllByOrderStatus(orderStatus);
     }
@@ -108,23 +114,6 @@ public class OrdersServiceImpl implements OrdersService {
     }
 
     @Override
-    public Orders nextStatus(Long orderId) {
-        Orders order = ordersRepository.findById(orderId).get();
-        String orderStatusVal = order.getOrderStatus().name();
-
-        if(orderStatusVal.equals("REJECTED") || orderStatusVal.equals("DELIVERED")) {
-            throw new RuntimeException("This order cannot be updated anymore!");
-        }
-
-        if(order.getOrderStatus().ordinal() < OrderStatus.values().length-2) {
-            OrderStatus orderStatus = OrderStatus.values()[order.getOrderStatus().ordinal() + 1];
-            order.setOrderStatus(orderStatus);
-        }
-
-        return order;
-    }
-
-    @Override
     public Orders setAcceptedStatus(Long orderId) {
         Orders order = ordersRepository.findById(orderId).get();
         order.setOrderStatus(OrderStatus.ACCEPTED);
@@ -163,6 +152,5 @@ public class OrdersServiceImpl implements OrdersService {
 
         return order;
     }
-
 
 }
