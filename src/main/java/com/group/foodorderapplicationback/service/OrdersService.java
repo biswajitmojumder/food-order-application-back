@@ -17,6 +17,7 @@ public interface OrdersService {
     Orders insertOrderForAuthenticatedUser(HttpServletRequest request, Orders order);
     Orders setAcceptedStatus(Long orderId);
     Orders setPreparingStatus(Long orderId);
+    Orders setPickReadyStatus(Long orderId);
     Orders setOnTheWay(Long orderId);
     Orders setDeliveredStatus(Long orderId);
     Orders setRejectedStatus(Long orderId);

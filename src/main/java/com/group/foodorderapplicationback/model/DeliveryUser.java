@@ -18,7 +18,7 @@ public class DeliveryUser extends Account {
     private String phoneNumber;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @OneToMany(mappedBy = "deliveryUser", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "deliveryUser", cascade = CascadeType.ALL)
     private List<Orders> allOrders;
 
 }

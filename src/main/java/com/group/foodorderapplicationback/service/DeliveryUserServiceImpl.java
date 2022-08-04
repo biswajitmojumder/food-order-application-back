@@ -108,8 +108,9 @@ public class DeliveryUserServiceImpl implements DeliveryUserService {
 
         log.info("Getting active order for authorized delivery user: {" + decodedJWT.getSubject() + "}");
 
+        OrderStatus[] orderStatuses = {OrderStatus.DELIVERED, OrderStatus.REJECTED};
         List<Orders> orderListDesc =
-                ordersRepository.findAllByDeliveryUserUsernameAndOrderStatusNotOrderByDateTimeDesc(decodedJWT.getSubject(), OrderStatus.DELIVERED);
+                ordersRepository.findAllByDeliveryUserUsernameAndOrderStatusNotInOrderByDateTimeDesc(decodedJWT.getSubject(), orderStatuses);
         if(orderListDesc.size() > 0) {
             return orderListDesc.get(0);
         }
