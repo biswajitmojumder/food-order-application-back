@@ -11,4 +11,6 @@ public interface OrdersRepository extends CrudRepository<Orders, Long> {
     List<Orders> findAllByOrderStatusNotIn(OrderStatus[] orderStatuses);
     Orders findByDeliveryUserUsernameAndOrderStatusNotIn(String username, OrderStatus[] orderStatuses);
     List<Orders> findAllByDeliveryUserUsernameAndOrderStatusNotInOrderByDateTimeDesc(String username, OrderStatus[] orderStatuses);
+    List<Orders> findAllByDeliveryUserUsernameOrderByDateTimeDesc(String username);
+    List<Orders> findAllByUserUsernameOrderByDateTimeDesc(String username);
 }

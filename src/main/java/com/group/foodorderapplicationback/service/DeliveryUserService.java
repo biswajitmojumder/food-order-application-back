@@ -14,4 +14,5 @@ public interface DeliveryUserService {
     DeliveryUser getDeliveryUserInfo(HttpServletRequest request);
     Orders takeOrder(HttpServletRequest request, Long id);
     Orders getActiveOrder(HttpServletRequest request);
+    List<Orders> findAllOrdersForDeliveryUser(HttpServletRequest request);
 }

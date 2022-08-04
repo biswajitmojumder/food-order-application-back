@@ -9,6 +9,7 @@ import com.group.foodorderapplicationback.model.Orders;
 import com.group.foodorderapplicationback.model.Role;
 import com.group.foodorderapplicationback.model.User;
 import com.group.foodorderapplicationback.repository.FoodRepository;
+import com.group.foodorderapplicationback.repository.OrdersRepository;
 import com.group.foodorderapplicationback.repository.RoleRepository;
 import com.group.foodorderapplicationback.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -33,6 +34,7 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final FoodRepository foodRepository;
+    private final OrdersRepository ordersRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Override
@@ -114,7 +116,7 @@ public class UserServiceImpl implements UserService {
 
         log.info("Getting order history for authorized user: {" + decodedJWT.getSubject() + "}");
 
-        return userRepository.findByUsername(decodedJWT.getSubject()).getOrders();
+        return ordersRepository.findAllByUserUsernameOrderByDateTimeDesc(decodedJWT.getSubject());
     }
 
     @Override

@@ -57,6 +57,11 @@ public class DeliveryUserController {
         return ResponseEntity.ok().body(deliveryUserService.getDeliveryUserInfo(request));
     }
 
+    @GetMapping("/delivery-user/get-order-history")
+    public ResponseEntity<List<Orders>> getUserOrders(HttpServletRequest request) {
+        return ResponseEntity.ok().body(deliveryUserService.findAllOrdersForDeliveryUser(request));
+    }
+
     @PutMapping("/delivery-user/take-order")
     public ResponseEntity<Orders> takeOrder(HttpServletRequest request, @RequestParam Long id) {
         return ResponseEntity.ok().body(deliveryUserService.takeOrder(request, id));

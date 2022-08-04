@@ -117,4 +117,17 @@ public class DeliveryUserServiceImpl implements DeliveryUserService {
 
         return null;
     }
+
+    @Override
+    public List<Orders> findAllOrdersForDeliveryUser(HttpServletRequest request) {
+        String authorizationHeader = request.getHeader(AUTHORIZATION);
+        String token = authorizationHeader.substring("Bearer ".length());
+        Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());   //debug secret - same as authentication
+        JWTVerifier jwtVerifier = JWT.require(algorithm).build();
+        DecodedJWT decodedJWT = jwtVerifier.verify(token);
+
+        log.info("Getting order history for authorized delivery user: {" + decodedJWT.getSubject() + "}");
+
+        return ordersRepository.findAllByDeliveryUserUsernameOrderByDateTimeDesc(decodedJWT.getSubject());
+    }
 }
