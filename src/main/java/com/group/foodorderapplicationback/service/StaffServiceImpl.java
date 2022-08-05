@@ -4,6 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.group.foodorderapplicationback.model.Manager;
 import com.group.foodorderapplicationback.model.Role;
 import com.group.foodorderapplicationback.model.Staff;
 import com.group.foodorderapplicationback.repository.RoleRepository;
@@ -54,6 +55,44 @@ public class StaffServiceImpl implements StaffService {
     @Override
     public void deleteById(Long id) {
         staffRepository.deleteById(id);
+    }
+
+    @Override
+    public Staff update(Staff staff) {
+        Staff dbStaff = staffRepository.findById(staff.getId()).get();
+
+        dbStaff.setFirstName(staff.getFirstName());
+        dbStaff.setLastName(staff.getLastName());
+        dbStaff.setEmail(staff.getEmail());
+
+        if(staff.getPassword() != null && staff.getPassword().length() > 0) {
+            dbStaff.setPassword(passwordEncoder.encode(staff.getPassword()));
+        }
+
+        return staffRepository.save(dbStaff);
+    }
+
+    @Override
+    public Staff updateAuthenticated(HttpServletRequest request, Staff staff) {
+        String authorizationHeader = request.getHeader(AUTHORIZATION);
+        String token = authorizationHeader.substring("Bearer ".length());
+        Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());   //debug secret - same as authentication
+        JWTVerifier jwtVerifier = JWT.require(algorithm).build();
+        DecodedJWT decodedJWT = jwtVerifier.verify(token);
+
+        log.info("Updating staff: {" + decodedJWT.getSubject() + "}");
+
+        Staff dbStaff = staffRepository.findByUsername(decodedJWT.getSubject());
+
+        dbStaff.setFirstName(staff.getFirstName());
+        dbStaff.setLastName(staff.getLastName());
+        dbStaff.setEmail(staff.getEmail());
+
+        if(staff.getPassword() != null) {
+            dbStaff.setPassword(passwordEncoder.encode(staff.getPassword()));
+        }
+
+        return staffRepository.save(dbStaff);
     }
 
     @Override

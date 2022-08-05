@@ -33,7 +33,12 @@ public class StaffController {
 
     @PutMapping("/staff/update")
     public ResponseEntity<Staff> updateStaff(@RequestBody Staff staff) {
-        return ResponseEntity.ok().body(staffService.save(staff));
+        return ResponseEntity.ok().body(staffService.update(staff));
+    }
+
+    @PutMapping("/staff/update-authenticated")
+    public ResponseEntity<Staff> updateStaff(HttpServletRequest request, @RequestBody Staff staff) {
+        return ResponseEntity.ok().body(staffService.updateAuthenticated(request, staff));
     }
 
     @DeleteMapping(value = "/staff/delete", params = "id")

@@ -5,10 +5,7 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.group.foodorderapplicationback.exception.ApiRequestException;
-import com.group.foodorderapplicationback.model.DeliveryUser;
-import com.group.foodorderapplicationback.model.OrderStatus;
-import com.group.foodorderapplicationback.model.Orders;
-import com.group.foodorderapplicationback.model.Role;
+import com.group.foodorderapplicationback.model.*;
 import com.group.foodorderapplicationback.repository.DeliveryUserRepository;
 import com.group.foodorderapplicationback.repository.OrdersRepository;
 import com.group.foodorderapplicationback.repository.RoleRepository;
@@ -129,5 +126,48 @@ public class DeliveryUserServiceImpl implements DeliveryUserService {
         log.info("Getting order history for authorized delivery user: {" + decodedJWT.getSubject() + "}");
 
         return ordersRepository.findAllByDeliveryUserUsernameOrderByDateTimeDesc(decodedJWT.getSubject());
+    }
+
+    @Override
+    public DeliveryUser update(DeliveryUser deliveryUser) {
+        DeliveryUser dbDeliveryUser = deliveryUserRepository.findById(deliveryUser.getId()).get();
+
+        dbDeliveryUser.setFirstName(deliveryUser.getFirstName());
+        dbDeliveryUser.setLastName(deliveryUser.getLastName());
+        dbDeliveryUser.setEmail(deliveryUser.getEmail());
+
+        if(deliveryUser.getPassword() != null && deliveryUser.getPassword().length() > 0) {
+            dbDeliveryUser.setPassword(passwordEncoder.encode(deliveryUser.getPassword()));
+        }
+
+        return deliveryUserRepository.save(dbDeliveryUser);
+    }
+
+    @Override
+    public DeliveryUser updateAuthenticated(HttpServletRequest request, DeliveryUser deliveryUser) {
+        String authorizationHeader = request.getHeader(AUTHORIZATION);
+        String token = authorizationHeader.substring("Bearer ".length());
+        Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());   //debug secret - same as authentication
+        JWTVerifier jwtVerifier = JWT.require(algorithm).build();
+        DecodedJWT decodedJWT = jwtVerifier.verify(token);
+
+        log.info("Updating delivery user: {" + decodedJWT.getSubject() + "}");
+
+        DeliveryUser dbDeliveryUser = deliveryUserRepository.findByUsername(decodedJWT.getSubject());
+
+        dbDeliveryUser.setFirstName(deliveryUser.getFirstName());
+        dbDeliveryUser.setLastName(deliveryUser.getLastName());
+        dbDeliveryUser.setEmail(deliveryUser.getEmail());
+
+        if(deliveryUser.getPassword() != null) {
+            dbDeliveryUser.setPassword(passwordEncoder.encode(deliveryUser.getPassword()));
+        }
+
+        dbDeliveryUser.setVehicleManufacturer(deliveryUser.getVehicleManufacturer());
+        dbDeliveryUser.setVehicleNumber(deliveryUser.getVehicleNumber());
+        dbDeliveryUser.setVehicleColor(deliveryUser.getVehicleColor());
+        dbDeliveryUser.setPhoneNumber(deliveryUser.getPhoneNumber());
+
+        return deliveryUserRepository.save(dbDeliveryUser);
     }
 }

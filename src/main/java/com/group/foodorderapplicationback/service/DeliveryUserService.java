@@ -15,4 +15,6 @@ public interface DeliveryUserService {
     Orders takeOrder(HttpServletRequest request, Long id);
     Orders getActiveOrder(HttpServletRequest request);
     List<Orders> findAllOrdersForDeliveryUser(HttpServletRequest request);
+    DeliveryUser update(DeliveryUser deliveryUser);
+    DeliveryUser updateAuthenticated(HttpServletRequest request, DeliveryUser deliveryUser);
 }

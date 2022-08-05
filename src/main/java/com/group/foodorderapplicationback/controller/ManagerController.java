@@ -1,9 +1,7 @@
 package com.group.foodorderapplicationback.controller;
 
 import com.group.foodorderapplicationback.model.Account;
-import com.group.foodorderapplicationback.model.Admin;
 import com.group.foodorderapplicationback.model.Manager;
-import com.group.foodorderapplicationback.model.Restaurant;
 import com.group.foodorderapplicationback.service.ManagerService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -36,7 +34,12 @@ public class ManagerController {
 
     @PutMapping("/manager/update")
     public ResponseEntity<Manager> updateManager(@RequestBody Manager manager) {
-        return ResponseEntity.ok().body(managerService.save(manager));
+        return ResponseEntity.ok().body(managerService.update(manager));
+    }
+
+    @PutMapping("/manager/update-authenticated")
+    public ResponseEntity<Manager> updateManager(HttpServletRequest request, @RequestBody Manager manager) {
+        return ResponseEntity.ok().body(managerService.updateAuthenticated(request, manager));
     }
 
     @DeleteMapping(value = "/manager/delete", params = "id")

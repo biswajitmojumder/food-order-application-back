@@ -4,6 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.group.foodorderapplicationback.model.Admin;
 import com.group.foodorderapplicationback.model.Manager;
 import com.group.foodorderapplicationback.model.Role;
 import com.group.foodorderapplicationback.repository.ManagerRepository;
@@ -66,5 +67,43 @@ public class ManagerServiceImpl implements ManagerService {
         log.info("Getting manager info for authorized manager: {" + decodedJWT.getSubject() + "}");
 
         return managerRepository.findByUsername(decodedJWT.getSubject());
+    }
+
+    @Override
+    public Manager update(Manager manager) {
+        Manager dbManager = managerRepository.findById(manager.getId()).get();
+
+        dbManager.setFirstName(manager.getFirstName());
+        dbManager.setLastName(manager.getLastName());
+        dbManager.setEmail(manager.getEmail());
+
+        if(manager.getPassword() != null && manager.getPassword().length() > 0) {
+            dbManager.setPassword(passwordEncoder.encode(manager.getPassword()));
+        }
+
+        return managerRepository.save(dbManager);
+    }
+
+    @Override
+    public Manager updateAuthenticated(HttpServletRequest request, Manager manager) {
+        String authorizationHeader = request.getHeader(AUTHORIZATION);
+        String token = authorizationHeader.substring("Bearer ".length());
+        Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());   //debug secret - same as authentication
+        JWTVerifier jwtVerifier = JWT.require(algorithm).build();
+        DecodedJWT decodedJWT = jwtVerifier.verify(token);
+
+        log.info("Updating manager: {" + decodedJWT.getSubject() + "}");
+
+        Manager dbManager = managerRepository.findByUsername(decodedJWT.getSubject());
+
+        dbManager.setFirstName(manager.getFirstName());
+        dbManager.setLastName(manager.getLastName());
+        dbManager.setEmail(manager.getEmail());
+
+        if(manager.getPassword() != null) {
+            dbManager.setPassword(passwordEncoder.encode(manager.getPassword()));
+        }
+
+        return managerRepository.save(dbManager);
     }
 }

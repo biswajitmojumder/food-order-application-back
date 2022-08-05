@@ -37,7 +37,12 @@ public class DeliveryUserController {
 
     @PutMapping("/delivery-user/update")
     public ResponseEntity<DeliveryUser> updateDeliveryUser(@RequestBody DeliveryUser deliveryUser) {
-        return ResponseEntity.ok().body(deliveryUserService.save(deliveryUser));
+        return ResponseEntity.ok().body(deliveryUserService.update(deliveryUser));
+    }
+
+    @PutMapping("/delivery-user/update-authenticated")
+    public ResponseEntity<DeliveryUser> updateAuthenticatedDeliveryUser(HttpServletRequest request, @RequestBody DeliveryUser deliveryUser) {
+        return ResponseEntity.ok().body(deliveryUserService.updateAuthenticated(request, deliveryUser));
     }
 
     @DeleteMapping(value = "/delivery-user/delete", params = "id")

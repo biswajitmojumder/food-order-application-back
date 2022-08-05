@@ -11,6 +11,7 @@ public interface StaffService {
     Staff save(Staff account);
     Staff getStaff(String username);
     void deleteById(Long id);
-
+    Staff update(Staff staff);
+    Staff updateAuthenticated(HttpServletRequest request, Staff staff);
     Staff getStaffInfo(HttpServletRequest request);
 }

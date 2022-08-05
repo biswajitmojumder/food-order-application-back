@@ -142,4 +142,28 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByUsernameContainingOrEmailContaining(username, email);
     }
 
+    @Override
+    public User update(HttpServletRequest request, User user) {
+        String authorizationHeader = request.getHeader(AUTHORIZATION);
+        String token = authorizationHeader.substring("Bearer ".length());
+        Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());   //debug secret - same as authentication
+        JWTVerifier jwtVerifier = JWT.require(algorithm).build();
+        DecodedJWT decodedJWT = jwtVerifier.verify(token);
+
+        log.info("Updating user: {" + decodedJWT.getSubject() + "}");
+
+        User dbUser = userRepository.findByUsername(decodedJWT.getSubject());
+
+        dbUser.setFirstName(user.getFirstName());
+        dbUser.setLastName(user.getLastName());
+        dbUser.setEmail(user.getEmail());
+
+        if(user.getPassword() != null) {
+            dbUser.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
+
+        dbUser.setPhoneNumber(user.getPhoneNumber());
+
+        return userRepository.save(dbUser);
+    }
 }

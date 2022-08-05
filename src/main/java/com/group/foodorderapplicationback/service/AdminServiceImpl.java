@@ -62,4 +62,27 @@ public class AdminServiceImpl implements AdminService {
 
         return adminRepository.findByUsername(decodedJWT.getSubject());
     }
+
+    @Override
+    public Admin update(HttpServletRequest request, Admin admin) {
+        String authorizationHeader = request.getHeader(AUTHORIZATION);
+        String token = authorizationHeader.substring("Bearer ".length());
+        Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());   //debug secret - same as authentication
+        JWTVerifier jwtVerifier = JWT.require(algorithm).build();
+        DecodedJWT decodedJWT = jwtVerifier.verify(token);
+
+        log.info("Updating admin: {" + decodedJWT.getSubject() + "}");
+
+        Admin dbAdmin = adminRepository.findByUsername(decodedJWT.getSubject());
+
+        dbAdmin.setFirstName(admin.getFirstName());
+        dbAdmin.setLastName(admin.getLastName());
+        dbAdmin.setEmail(admin.getEmail());
+
+        if(admin.getPassword() != null) {
+            dbAdmin.setPassword(passwordEncoder.encode(admin.getPassword()));
+        }
+
+        return adminRepository.save(dbAdmin);
+    }
 }

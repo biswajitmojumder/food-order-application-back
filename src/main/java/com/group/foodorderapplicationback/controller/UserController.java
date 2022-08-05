@@ -4,7 +4,6 @@ import com.group.foodorderapplicationback.model.Food;
 import com.group.foodorderapplicationback.model.Orders;
 import com.group.foodorderapplicationback.model.User;
 import com.group.foodorderapplicationback.service.UserService;
-import com.group.foodorderapplicationback.service.WebSocketService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -62,8 +61,8 @@ public class UserController {
     }
 
     @PutMapping("/user/update")
-    public ResponseEntity<User> updateUser(@RequestBody User user) {
-        return ResponseEntity.ok().body(userService.saveUser(user));
+    public ResponseEntity<User> updateUser(HttpServletRequest request, @RequestBody User user) {
+        return ResponseEntity.ok().body(userService.update(request, user));
     }
 
     @DeleteMapping(value = "/user/delete", params = "id")

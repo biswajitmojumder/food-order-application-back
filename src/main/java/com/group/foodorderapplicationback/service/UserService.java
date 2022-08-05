@@ -21,5 +21,6 @@ public interface UserService {
     User getUserInfo(HttpServletRequest request);
     Page<User> findAll(Pageable pageable);
     List<User> searchByUsernameOrEmail(String username, String email);
+    User update(HttpServletRequest request, User user);
 
 }
