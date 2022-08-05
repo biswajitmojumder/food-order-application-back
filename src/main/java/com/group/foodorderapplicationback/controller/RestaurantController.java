@@ -37,7 +37,7 @@ public class RestaurantController {
 
     @PutMapping(value = "/restaurant/update")
     public ResponseEntity<Restaurant> updateRestaurant(@RequestBody Restaurant restaurant) {
-        return ResponseEntity.ok().body(restaurantService.save(restaurant));
+        return ResponseEntity.ok().body(restaurantService.update(restaurant));
     }
 
     @DeleteMapping(value = "/restaurant/delete", params = "id")

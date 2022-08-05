@@ -29,6 +29,18 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     @Override
+    public Restaurant update(Restaurant restaurant) {
+        Restaurant originalRestaurant = restaurantRepository.findById(restaurant.getId()).get();
+        originalRestaurant.setName(restaurant.getName());
+        originalRestaurant.setDescription(restaurant.getDescription());
+        originalRestaurant.getAddress().setStreetAddress(restaurant.getAddress().getStreetAddress());
+        originalRestaurant.getAddress().setCity(restaurant.getAddress().getCity());
+        originalRestaurant.getAddress().setZipCode(restaurant.getAddress().getZipCode());
+
+        return restaurantRepository.save(originalRestaurant);
+    }
+
+    @Override
     public Restaurant save(Restaurant restaurant) {
         return restaurantRepository.save(restaurant);
     }
