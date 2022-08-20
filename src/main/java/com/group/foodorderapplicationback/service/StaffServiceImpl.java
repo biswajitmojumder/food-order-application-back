@@ -30,7 +30,6 @@ public class StaffServiceImpl implements StaffService {
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
 
-
     @Override
     public List<Staff> findAll() {
         return (List<Staff>) staffRepository.findAll();
@@ -45,11 +44,6 @@ public class StaffServiceImpl implements StaffService {
         staff.getRoleList().add(role);
 
         return staffRepository.save(staff);
-    }
-
-    @Override
-    public Staff getStaff(String username) {
-        return staffRepository.findByUsername(username);
     }
 
     @Override

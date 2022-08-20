@@ -47,11 +47,6 @@ public class ManagerServiceImpl implements ManagerService {
     }
 
     @Override
-    public Manager getManager(String username) {
-        return managerRepository.findByUsername(username);
-    }
-
-    @Override
     public void deleteById(Long id) {
         managerRepository.deleteById(id);
     }

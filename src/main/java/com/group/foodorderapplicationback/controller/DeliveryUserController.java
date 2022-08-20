@@ -2,9 +2,6 @@ package com.group.foodorderapplicationback.controller;
 
 import com.group.foodorderapplicationback.model.DeliveryUser;
 import com.group.foodorderapplicationback.model.Orders;
-import com.group.foodorderapplicationback.model.Staff;
-import com.group.foodorderapplicationback.model.User;
-import com.group.foodorderapplicationback.repository.DeliveryUserRepository;
 import com.group.foodorderapplicationback.service.DeliveryUserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -18,7 +18,7 @@ public class AdminController {
     private final AdminService adminService;
 
     @GetMapping("/admin/get-admin-info")
-    public ResponseEntity<Admin> getUserInfo(HttpServletRequest request) {
+    public ResponseEntity<Admin> getAdminInfo(HttpServletRequest request) {
         return ResponseEntity.ok().body(adminService.getAdminInfo(request));
     }
 

@@ -12,7 +12,6 @@ import java.util.List;
 public interface UserService {
     List<User> findAll();
     User saveUser(User user);
-    User getUser(String username);
     void deleteById(Long id);
     Food addFoodToFavorites(Long foodId, HttpServletRequest request);
     void removeFoodFromFavourites(Long id, HttpServletRequest request);
@@ -22,5 +21,4 @@ public interface UserService {
     Page<User> findAll(Pageable pageable);
     List<User> searchByUsernameOrEmail(String username, String email);
     User update(HttpServletRequest request, User user);
-
 }

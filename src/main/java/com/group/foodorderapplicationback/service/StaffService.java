@@ -8,8 +8,7 @@ import java.util.List;
 
 public interface StaffService {
     List<Staff> findAll();
-    Staff save(Staff account);
-    Staff getStaff(String username);
+    Staff save(Staff staff);
     void deleteById(Long id);
     Staff update(Staff staff);
     Staff updateAuthenticated(HttpServletRequest request, Staff staff);

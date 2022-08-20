@@ -26,7 +26,7 @@ public class StaffController {
     }
 
     @PostMapping("/staff/new")
-    public ResponseEntity<Staff> saveManager(@RequestBody Staff staff) {
+    public ResponseEntity<Staff> saveStaff(@RequestBody Staff staff) {
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/staff/new").toUriString());    //Status 201 - created
         return ResponseEntity.created(uri).body(staffService.save(staff));
     }
