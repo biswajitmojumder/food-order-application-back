@@ -69,46 +69,91 @@ public class FoodOrderApplicationBackApplication {
 			User user_2 = new User();
 			user_2.setUsername("user_2");
 			user_2.setPassword("password");
+
+			user_2.setEmail("abc_2@email.com");
+			user_2.setFirstName("Firstname");
+			user_2.setLastName("Lastname");
+			user_2.setPhoneNumber("0712345691");
 			userService.saveUser(user_2);
 
 			User user_3 = new User();
 			user_3.setUsername("user_3");
 			user_3.setPassword("password");
+
+			user_3.setEmail("abc_3@email.com");
+			user_3.setFirstName("Firstname");
+			user_3.setLastName("Lastname");
+			user_3.setPhoneNumber("0712345692");
 			userService.saveUser(user_3);
 
 			User user_4 = new User();
 			user_4.setUsername("user_4");
 			user_4.setPassword("password");
+
+			user_4.setEmail("abc_4@email.com");
+			user_4.setFirstName("Firstname");
+			user_4.setLastName("Lastname");
+			user_4.setPhoneNumber("0712345693");
 			userService.saveUser(user_4);
 
 			User user_5 = new User();
 			user_5.setUsername("user_5");
 			user_5.setPassword("password");
+
+			user_5.setEmail("abc_5@email.com");
+			user_5.setFirstName("Firstname");
+			user_5.setLastName("Lastname");
+			user_5.setPhoneNumber("0712345694");
 			userService.saveUser(user_5);
 
 			User user_6 = new User();
 			user_6.setUsername("user_6");
 			user_6.setPassword("password");
+
+			user_6.setEmail("abc_6@email.com");
+			user_6.setFirstName("Firstname");
+			user_6.setLastName("Lastname");
+			user_6.setPhoneNumber("0712345695");
 			userService.saveUser(user_6);
 
 			User user_7 = new User();
 			user_7.setUsername("user_7");
 			user_7.setPassword("password");
+
+			user_7.setEmail("abc_7@email.com");
+			user_7.setFirstName("Firstname");
+			user_7.setLastName("Lastname");
+			user_7.setPhoneNumber("0712345696");
 			userService.saveUser(user_7);
 
 			User user_8 = new User();
 			user_8.setUsername("user_8");
 			user_8.setPassword("password");
+
+			user_8.setEmail("abc_8@email.com");
+			user_8.setFirstName("Firstname");
+			user_8.setLastName("Lastname");
+			user_8.setPhoneNumber("0712345697");
 			userService.saveUser(user_8);
 
 			User user_9 = new User();
 			user_9.setUsername("user_9");
 			user_9.setPassword("password");
+
+			user_9.setEmail("abc_9@email.com");
+			user_9.setFirstName("Firstname");
+			user_9.setLastName("Lastname");
+			user_9.setPhoneNumber("0712345698");
 			userService.saveUser(user_9);
 
 			User user_10 = new User();
 			user_10.setUsername("user_10");
 			user_10.setPassword("password");
+
+			user_10.setEmail("abc_10@email.com");
+			user_10.setFirstName("Firstname");
+			user_10.setLastName("Lastname");
+			user_10.setPhoneNumber("0712345699");
 			userService.saveUser(user_10);
 			//endregion
 
@@ -118,6 +163,7 @@ public class FoodOrderApplicationBackApplication {
 			manager.setLastName("Lastname");
 			manager.setUsername("manager_1");
 			manager.setPassword("password");
+			manager.setEmail("manager@email.com");
 			managerService.save(manager);
 			//endregion
 
@@ -127,6 +173,7 @@ public class FoodOrderApplicationBackApplication {
 			staff.setLastName("Lastname");
 			staff.setUsername("staff_1");
 			staff.setPassword("password");
+			staff.setEmail("staff@email.com");
 			staffService.save(staff);
 			//endregion Staff
 
@@ -140,6 +187,7 @@ public class FoodOrderApplicationBackApplication {
 			deliveryUser.setVehicleNumber("B 123 ABC");
 			deliveryUser.setVehicleColor("RED");
 			deliveryUser.setPhoneNumber("0712312312");
+			deliveryUser.setEmail("delivery_user@email.com");
 
 			deliveryUserService.save(deliveryUser);
 			//endregion Delivery User

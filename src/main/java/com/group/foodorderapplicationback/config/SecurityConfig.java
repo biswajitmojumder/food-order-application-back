@@ -62,7 +62,7 @@ public class SecurityConfig {
         http.authorizeRequests().antMatchers(PUT,"/admin/update").hasAnyAuthority("ROLE_ADMIN");
 
         //Manager Endpoints
-        http.authorizeRequests().antMatchers(GET,"/admin/get-manager-info").hasAnyAuthority("ROLE_MANAGER");
+        http.authorizeRequests().antMatchers(GET,"/manager/get-manager-info").hasAnyAuthority("ROLE_MANAGER");
         http.authorizeRequests().antMatchers(GET,"/manager/get-all").hasAnyAuthority("ROLE_ADMIN");
         http.authorizeRequests().antMatchers(POST,"/manager/new").hasAnyAuthority("ROLE_ADMIN");
         http.authorizeRequests().antMatchers(PUT,"/manager/update").hasAnyAuthority("ROLE_ADMIN");

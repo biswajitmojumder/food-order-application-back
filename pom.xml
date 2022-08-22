@@ -72,6 +72,12 @@
 			<scope>test</scope>
 		</dependency>
 
+		<!-- Validation -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-validation</artifactId>
+		</dependency>
+
 		<!-- Websocket -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
